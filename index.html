@@ -1,0 +1,915 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FacilityCore | Smarter Living Starts Here</title>
+  <meta name="description" content="Manage society maintenance, complaints, notices and community services with FacilityCore.">
+
+  <!-- WhatsApp link preview: replace example URLs after publishing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FacilityCore | Smarter Living Starts Here">
+  <meta property="og:description" content="Maintenance, complaints and notices for your community, all in one place.">
+  <meta property="og:url" content="https://YOUR-WEBSITE-URL.com/">
+  <meta property="og:image" content="https://YOUR-WEBSITE-URL.com/preview.jpg">
+
+  <meta name="theme-color" content="#003C38">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #003c38;
+      --green-dark: #00332f;
+      --orange: #ffad12;
+      --cream: #f5f2e5;
+      --ink: #073d39;
+      --muted: #e2eeeb;
+      --line: rgba(92, 196, 176, 0.38);
+      --icon-bg: rgba(44, 132, 119, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: #fff;
+      font-family: "Inter", Arial, sans-serif;
+      background:
+        radial-gradient(ellipse at 15% 5%, rgba(0, 96, 83, .25), transparent 48%),
+        radial-gradient(ellipse at 90% 75%, rgba(0, 83, 72, .2), transparent 45%),
+        var(--green);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, a {
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(100% - 48px, 906px);
+      margin-inline: auto;
+      padding: 28px 0 36px;
+    }
+
+    /* BRAND */
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      margin-bottom: 18px;
+    }
+
+    .brand-icon {
+      width: 58px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      border-radius: 14px;
+      background: var(--orange);
+      color: var(--ink);
+    }
+
+    .brand-icon svg {
+      width: 34px;
+      height: 34px;
+    }
+
+    .brand-name {
+      font-size: clamp(25px, 4vw, 37px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+    }
+
+    /* HEADLINE */
+
+    .eyebrow {
+      margin: 15px 0 5px;
+      color: var(--orange);
+      font-size: clamp(11px, 1.9vw, 18px);
+      font-weight: 800;
+      letter-spacing: clamp(2px, .4vw, 4px);
+      line-height: 1.5;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 8.8vw, 96px);
+      line-height: .96;
+      font-weight: 900;
+      letter-spacing: clamp(-5px, -.45vw, -2px);
+    }
+
+    h1 span {
+      color: var(--orange);
+    }
+
+    .intro {
+      margin: 16px 0 20px;
+      max-width: 900px;
+      font-size: clamp(16px, 2.65vw, 28px);
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -.45px;
+    }
+
+    /* FEATURES */
+
+    .features {
+      margin: 0;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 3.7vw, 40px);
+      min-height: 101px;
+      padding: 10px 6px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .feature:last-child {
+      border-bottom: none;
+    }
+
+    .feature-icon {
+      width: clamp(58px, 8.6vw, 92px);
+      height: clamp(58px, 7.7vw, 82px);
+      flex: 0 0 clamp(58px, 8.6vw, 92px);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--orange);
+      background: var(--icon-bg);
+    }
+
+    .feature-icon svg {
+      width: clamp(30px, 4.3vw, 46px);
+      height: clamp(30px, 4.3vw, 46px);
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .feature-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .feature h2 {
+      margin: 0 0 4px;
+      font-size: clamp(16px, 2.55vw, 27px);
+      font-weight: 800;
+      line-height: 1.3;
+      letter-spacing: -.65px;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(12px, 1.95vw, 20px);
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    /* PROTOTYPE CARD */
+
+    .prototype {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-top: 10px;
+      padding: 20px 28px;
+      border-radius: 18px;
+      background: var(--cream);
+      color: var(--ink);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .09);
+    }
+
+    .prototype-art {
+      width: 218px;
+      min-height: 138px;
+      flex: 0 0 218px;
+      display: grid;
+      place-items: center;
+      border-right: 2px solid #e8dec0;
+      padding-right: 27px;
+    }
+
+    .phone-art {
+      width: 140px;
+      height: 140px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #f1e8cf;
+    }
+
+    .phone-art svg {
+      width: 105px;
+      height: 105px;
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .prototype-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .prototype h2 {
+      margin: 0 0 6px;
+      font-size: clamp(22px, 3.5vw, 36px);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -1.2px;
+    }
+
+    .prototype p {
+      margin: 0 0 8px;
+      font-size: clamp(14px, 2.15vw, 21px);
+      line-height: 1.45;
+    }
+
+    .prototype-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #d97800;
+      font-size: clamp(14px, 2.15vw, 21px);
+      line-height: 1.5;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .prototype-link:hover {
+      color: #a95700;
+    }
+
+    /* LANGUAGE BUTTONS */
+
+    .language-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0;
+    }
+
+    .languages {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 9px 14px;
+      border: 2px solid rgba(57, 153, 139, .56);
+      border-radius: 50px;
+      max-width: 100%;
+    }
+
+    .language-label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 3px;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .language-label svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .lang-btn {
+      min-height: 38px;
+      min-width: 92px;
+      padding: 8px 16px;
+      border: 0;
+      border-radius: 50px;
+      color: var(--ink);
+      background: var(--cream);
+      font-size: 14px;
+      font-weight: 600;
+      transition: background .2s, transform .2s;
+    }
+
+    .lang-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .lang-btn.active {
+      background: var(--orange);
+    }
+
+    .lang-btn:focus-visible,
+    .demo-btn:focus-visible,
+    .prototype-link:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 4px;
+    }
+
+    /* DEMO BUTTON */
+
+    .demo-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .demo-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      width: min(100%, 326px);
+      min-height: 66px;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 50px;
+      color: var(--ink);
+      background: var(--orange);
+      font-size: clamp(18px, 2.5vw, 23px);
+      font-weight: 800;
+      box-shadow: 0 5px 0 rgba(137, 77, 0, .08);
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    .demo-btn:hover {
+      transform: translateY(-3px);
+      background: #ffc04a;
+      box-shadow: 0 10px 24px rgba(255, 173, 18, .18);
+    }
+
+    .demo-btn svg {
+      width: 29px;
+      height: 29px;
+      flex-shrink: 0;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* TABLETS */
+
+    @media (max-width: 768px) {
+      .page {
+        width: min(100% - 36px, 650px);
+        padding-top: 24px;
+      }
+
+      .feature {
+        min-height: 88px;
+      }
+
+      .prototype {
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .prototype-art {
+        width: 150px;
+        flex-basis: 150px;
+        padding-right: 18px;
+      }
+
+      .phone-art {
+        width: 112px;
+        height: 112px;
+      }
+
+      .phone-art svg {
+        width: 84px;
+        height: 84px;
+      }
+    }
+
+    /* MOBILE PHONES */
+
+    @media (max-width: 480px) {
+      .page {
+        width: calc(100% - 32px);
+        padding: 18px 0 28px;
+      }
+
+      .brand {
+        gap: 11px;
+        margin-bottom: 20px;
+      }
+
+      .brand-icon {
+        width: 46px;
+        height: 44px;
+        border-radius: 11px;
+      }
+
+      .brand-icon svg {
+        width: 29px;
+        height: 29px;
+      }
+
+      .brand-name {
+        font-size: 26px;
+        letter-spacing: -1.1px;
+      }
+
+      .eyebrow {
+        margin-top: 12px;
+        font-size: 10px;
+        letter-spacing: 1.9px;
+      }
+
+      h1 {
+        font-size: clamp(39px, 10.2vw, 49px);
+        letter-spacing: -2.5px;
+        line-height: .99;
+      }
+
+      .intro {
+        margin: 15px 0 15px;
+        font-size: 15px;
+        line-height: 1.6;
+        letter-spacing: 0;
+      }
+
+      .feature {
+        gap: 13px;
+        min-height: 86px;
+        padding: 13px 0;
+      }
+
+      .feature-icon {
+        width: 53px;
+        height: 53px;
+        flex-basis: 53px;
+      }
+
+      .feature-icon svg {
+        width: 29px;
+        height: 29px;
+      }
+
+      .feature h2 {
+        font-size: 15px;
+        line-height: 1.4;
+        letter-spacing: -.3px;
+      }
+
+      .feature p {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .prototype {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        margin-top: 13px;
+        padding: 18px;
+        border-radius: 14px;
+      }
+
+      .prototype-art {
+        width: 100%;
+        min-height: auto;
+        flex-basis: auto;
+        border-right: 0;
+        border-bottom: 1px solid #e8dec0;
+        padding: 0 0 16px;
+      }
+
+      .phone-art {
+        width: 92px;
+        height: 92px;
+      }
+
+      .phone-art svg {
+        width: 72px;
+        height: 72px;
+      }
+
+      .prototype h2 {
+        font-size: 25px;
+        letter-spacing: -.8px;
+      }
+
+      .prototype p {
+        font-size: 14px;
+      }
+
+      .prototype-link {
+        font-size: 14px;
+      }
+
+      .language-wrap {
+        margin: 15px 0;
+      }
+
+      .languages {
+        width: 100%;
+        gap: 7px;
+        padding: 10px 7px;
+        border-radius: 20px;
+      }
+
+      .language-label {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 2px;
+        font-size: 13px;
+      }
+
+      .language-label svg {
+        width: 23px;
+        height: 23px;
+      }
+
+      .lang-btn {
+        min-width: 0;
+        flex: 1;
+        padding: 9px 7px;
+        font-size: 12px;
+      }
+
+      .demo-btn {
+        min-height: 58px;
+        gap: 12px;
+        padding: 13px 20px;
+        font-size: 18px;
+      }
+
+      .demo-btn svg {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    /* EXTRA SMALL PHONES */
+
+    @media (max-width: 350px) {
+      .page {
+        width: calc(100% - 24px);
+      }
+
+      .brand-name {
+        font-size: 23px;
+      }
+
+      h1 {
+        font-size: 37px;
+      }
+
+      .feature {
+        gap: 10px;
+      }
+
+      .feature-icon {
+        width: 45px;
+        height: 45px;
+        flex-basis: 45px;
+      }
+
+      .feature h2 {
+        font-size: 14px;
+      }
+
+      .feature p {
+        font-size: 11px;
+      }
+
+      .lang-btn {
+        font-size: 11px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main class="page">
+
+  <!-- LOGO -->
+  <header class="brand">
+    <div class="brand-icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor"
+           stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 14 16 5l12 9"/>
+        <path d="M7 12v15h18V12"/>
+        <path d="M13 27v-9h6v9"/>
+      </svg>
+    </div>
+    <div class="brand-name">FacilityCore</div>
+  </header>
+
+  <!-- HEADLINE -->
+  <div class="eyebrow" data-i18n="eyebrow">
+    NOW LIVE IN OUR COMMUNITY
+  </div>
+
+  <h1>
+    <span class="white-title" data-i18n="headline1">Smarter living</span><br>
+    <span data-i18n="headline2">starts here.</span>
+  </h1>
+
+  <p class="intro" data-i18n="intro">
+    Maintenance, complaints and notices for your community,
+    all in one place on your phone.
+  </p>
+
+  <!-- SIX FEATURES -->
+  <section class="features" aria-label="FacilityCore features">
+
+    <article class="feature">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <rect x="5" y="7" width="38" height="32" rx="4"/>
+          <path d="M24 13v20M30 17H20a4 4 0 0 0 0 8h6a4 4 0 0 1 0 8H17"/>
+        </svg>
+      </div>
+      <div class="feature-content">
+        <h2 data-i18n="f1">Pay maintenance in seconds</h2>
+        <p data-i18n="d1">Pay your society maintenance charges conveniently through UPI, without cash or cheques.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <path d="M6 9h36v26H19L9 42v-7H6z"/>
+          <path d="M14 18h20M14 26h14"/>
+        </svg>
+      </div>
+      <div class="feature-content">
+        <h2 data-i18n="f2">Raise a complaint, track it live</h2>
+        <p data-i18n="d2">Report maintenance issues, share photos, and track complaint status in one place.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <path d="M10 34h28l-4-6V19a10 10 0 0 0-20 0v9z"/>
+          <path d="M19 39a5 5 0 0 0 10 0M22 7a2 2 0 0 1 4 0"/>
+        </svg>
+      </div>
+      <div class="feature-content">
+        <h2 data-i18n="f3">Never miss a notice</h2>
+        <p data-i18n="d3">Stay updated with society circulars, polls, and important announcements.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="20"/>
+          <path d="M4 24h40M24 4c7 6 10 13 10 20s-3 14-10 20c-7-6-10-13-10-20S17 10 24 4z"/>
+          <path d="M8 13h32M8 35h32"/>
+        </svg>
+      </div>
+      <div class="feature-content">
+        <h2 data-i18n="f4">Easy to use in 3 languages</h2>
+        <p data-i18n="d4">Use FacilityCore in English, Hindi, or Marathi for a more accessible experience.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <circle cx="24" cy="14" r="7"/>
+          <path d="M10 39v-4a14 14 0 0 1 28 0v4z"/>
+          <path d="M10 14a6 6 0 0 0 0 12M5 34v-2a9 9 0 0 1 8-9"/>
+          <path d="M38 14a6 6 0 0 1 0 12M43 34v-2a9 9 0 0 0-8-9"/>
+        </svg>
+      </div>
+      <div class="feature-content">
+        <h2 data-i18n="f5">Connect with your community</h2>
+        <p data-i18n="d5">Find fellow residents and discover local service providers through your community directory.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <path d="M24 4 41 11v12c0 11-7 17-17 21C14 40 7 34 7 23V11z"/>
+        </svg>
+      </div>
+      <div class="feature-content">
+        <h2 data-i18n="f6">Safe, secure and reliable</h2>
+        <p data-i18n="d6">Keep society information and payment records organised with a focus on data security.</p>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- PROTOTYPE CARD -->
+  <section class="prototype" aria-label="Explore the prototype">
+    <div class="prototype-art">
+      <div class="phone-art">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <rect x="24" y="7" width="52" height="86" rx="9"/>
+          <path d="M43 16h14"/>
+          <path d="M39 55 50 45l11 10"/>
+          <path d="M43 53v14h14V53"/>
+          <path d="m12 35-7-5M11 50H3M12 65l-7 5" stroke="#FFAD12"/>
+          <path d="m88 35 7-5M89 50h8M88 65l7 5" stroke="#FFAD12"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="prototype-copy">
+      <h2 data-i18n="prototypeTitle">Explore our prototype</h2>
+      <p data-i18n="prototypeDesc">
+        See how FacilityCore makes community management simpler.
+      </p>
+      <a class="prototype-link" href="#" id="prototypeLink">
+        <span data-i18n="prototypeLink">View Interactive Prototype</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- LANGUAGE SELECTOR -->
+  <div class="language-wrap">
+    <div class="languages">
+      <span class="language-label">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M4 7h17M12 4v3M8 7c1 7 5 11 11 14M18 9c-2 6-6 10-12 13"/>
+          <path d="m21 19 6 9M24 19l-6 9M19 25h10"/>
+        </svg>
+        <span data-i18n="available">Available in:</span>
+      </span>
+      <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">English</button>
+      <button class="lang-btn" type="button" data-lang="hi" aria-pressed="false">Hindi</button>
+      <button class="lang-btn" type="button" data-lang="mr" aria-pressed="false">Marathi</button>
+    </div>
+  </div>
+
+  <!-- BOOK DEMO -->
+  <div class="demo-wrap">
+    <button class="demo-btn" id="bookDemo" type="button">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="4" y="7" width="24" height="22" rx="2"/>
+        <path d="M10 3v8M22 3v8M4 14h24M11 20h3M11 24h3"/>
+      </svg>
+      <span data-i18n="book">Book Demo</span>
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+
+</main>
+
+<script>
+/* Add your real links here before publishing. */
+const PROTOTYPE_URL = "";
+const GOOGLE_FORM_URL = "";
+
+const translations = {
+  en: {
+    eyebrow: "NOW LIVE IN OUR COMMUNITY",
+    headline1: "Smarter living",
+    headline2: "starts here.",
+    intro: "Maintenance, complaints and notices for your community, all in one place on your phone.",
+    f1: "Pay maintenance in seconds",
+    d1: "Pay your society maintenance charges conveniently through UPI, without cash or cheques.",
+    f2: "Raise a complaint, track it live",
+    d2: "Report maintenance issues, share photos, and track complaint status in one place.",
+    f3: "Never miss a notice",
+    d3: "Stay updated with society circulars, polls, and important announcements.",
+    f4: "Easy to use in 3 languages",
+    d4: "Use FacilityCore in English, Hindi, or Marathi for a more accessible experience.",
+    f5: "Connect with your community",
+    d5: "Find fellow residents and discover local service providers through your community directory.",
+    f6: "Safe, secure and reliable",
+    d6: "Keep society information and payment records organised with a focus on data security.",
+    prototypeTitle: "Explore our prototype",
+    prototypeDesc: "See how FacilityCore makes community management simpler.",
+    prototypeLink: "View Interactive Prototype",
+    available: "Available in:",
+    book: "Book Demo"
+  },
+  hi: {
+    eyebrow: "अब हमारी सोसाइटी में उपलब्ध",
+    headline1: "स्मार्ट जीवन",
+    headline2: "यहीं से शुरू।",
+    intro: "आपकी सोसाइटी का मेंटेनेंस, शिकायतें और सूचनाएँ — सब कुछ एक ही जगह।",
+    f1: "मेंटेनेंस का भुगतान आसानी से करें",
+    d1: "बिना नकद या चेक के, UPI से सोसाइटी मेंटेनेंस का भुगतान करें।",
+    f2: "शिकायत दर्ज करें और स्थिति देखें",
+    d2: "मेंटेनेंस की समस्या दर्ज करें, फोटो साझा करें और शिकायत की स्थिति देखें।",
+    f3: "कोई सूचना न छूटे",
+    d3: "सोसाइटी के सर्कुलर, पोल और महत्वपूर्ण घोषणाओं से अपडेट रहें।",
+    f4: "3 भाषाओं में इस्तेमाल करें",
+    d4: "आसानी से FacilityCore को अंग्रेज़ी, हिंदी या मराठी में इस्तेमाल करें।",
+    f5: "अपनी कम्युनिटी से जुड़ें",
+    d5: "अपनी सोसाइटी की डायरेक्टरी में निवासियों और स्थानीय सेवा प्रदाताओं को खोजें।",
+    f6: "सुरक्षित और भरोसेमंद",
+    d6: "डेटा सुरक्षा पर ध्यान देते हुए सोसाइटी की जानकारी और भुगतान रिकॉर्ड व्यवस्थित रखें।",
+    prototypeTitle: "हमारा प्रोटोटाइप देखें",
+    prototypeDesc: "देखें कि FacilityCore सोसाइटी प्रबंधन को कैसे आसान बनाता है।",
+    prototypeLink: "इंटरैक्टिव प्रोटोटाइप देखें",
+    available: "उपलब्ध भाषाएँ:",
+    book: "डेमो बुक करें"
+  },
+  mr: {
+    eyebrow: "आता आपल्या सोसायटीमध्ये उपलब्ध",
+    headline1: "स्मार्ट जीवनाची",
+    headline2: "सुरुवात इथून.",
+    intro: "सोसायटीचे मेंटेनन्स, तक्रारी आणि सूचना — सर्व काही एकाच ठिकाणी.",
+    f1: "मेंटेनन्सचे पेमेंट सहज करा",
+    d1: "रोख रक्कम किंवा चेकशिवाय UPI द्वारे सोसायटी मेंटेनन्स भरा.",
+    f2: "तक्रार नोंदवा आणि स्थिती पाहा",
+    d2: "मेंटेनन्सची समस्या नोंदवा, फोटो शेअर करा आणि तक्रारीची स्थिती पाहा.",
+    f3: "कोणतीही सूचना चुकवू नका",
+    d3: "सोसायटीची परिपत्रके, पोल आणि महत्त्वाच्या घोषणांबाबत अपडेट राहा.",
+    f4: "3 भाषांमध्ये वापरा",
+    d4: "FacilityCore इंग्रजी, हिंदी किंवा मराठीमध्ये सहज वापरा.",
+    f5: "आपल्या समुदायाशी जोडलेले राहा",
+    d5: "सोसायटीच्या डायरेक्टरीमध्ये रहिवासी आणि स्थानिक सेवा पुरवठादार शोधा.",
+    f6: "सुरक्षित आणि विश्वासार्ह",
+    d6: "डेटा सुरक्षिततेवर लक्ष केंद्रित करून सोसायटीची माहिती आणि पेमेंट रेकॉर्ड व्यवस्थित ठेवा.",
+    prototypeTitle: "आमचा प्रोटोटाइप पाहा",
+    prototypeDesc: "FacilityCore सोसायटी व्यवस्थापन कसे सोपे करते ते पाहा.",
+    prototypeLink: "इंटरॅक्टिव्ह प्रोटोटाइप पाहा",
+    available: "उपलब्ध भाषा:",
+    book: "डेमो बुक करा"
+  }
+};
+
+document.querySelectorAll(".lang-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const lang = button.dataset.lang;
+    const content = translations[lang];
+
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll(".lang-btn").forEach(item => {
+      const selected = item.dataset.lang === lang;
+      item.classList.toggle("active", selected);
+      item.setAttribute("aria-pressed", String(selected));
+    });
+
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+      const key = element.dataset.i18n;
+      if (content[key]) {
+        element.textContent = content[key];
+      }
+    });
+  });
+});
+
+document.getElementById("prototypeLink").addEventListener("click", event => {
+  event.preventDefault();
+
+  if (PROTOTYPE_URL.trim()) {
+    window.open(PROTOTYPE_URL, "_blank", "noopener,noreferrer");
+  } else {
+    alert("Please add your prototype URL in the PROTOTYPE_URL setting near the bottom of index.html.");
+  }
+});
+
+document.getElementById("bookDemo").addEventListener("click", () => {
+    window.location.href = "demo.html";
+
+});
+
+</script>
+
+</body>
+</html>
