@@ -1,0 +1,1396 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FacilityCore | Interactive 6-Screen Prototype</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#FAF9F6;
+  --panel:#F4F3F0;
+  --ink:#1C1B19;
+  --ink2:#494740;
+  --muted:#6F6A63;
+  --line:#D8D4CB;
+  --line2:#E4E0D8;
+  --alert:#9C3B2E;
+  --ok:#1F6B45;
+  --emerg:#B91C1C;
+}
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body {
+  background:#E9E6DF;
+  font-family:'Inter','Noto Sans Devanagari',sans-serif;
+  color:var(--ink);
+  padding:32px 16px;
+}
+
+h1.page {
+  font-size:20px;
+  font-weight:600;
+  text-align:center;
+  margin-bottom:24px;
+}
+
+.gallery {
+  display:flex;
+  flex-wrap:wrap;
+  gap:32px;
+  justify-content:center;
+}
+
+.cap {
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.08em;
+  color:var(--muted);
+  margin-bottom:8px;
+  text-align:center;
+}
+
+/* Phone frame */
+
+.screen {
+  width:390px;
+  height:800px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.bar {
+  height:60px;
+  flex:none;
+  padding:0 24px;
+  border-bottom:1px solid var(--line2);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.bar .l {
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.bar .t {
+  display:flex;
+  flex-direction:column;
+}
+
+.bar .t b {
+  font-size:17px;
+  font-weight:600;
+}
+
+.avatar {
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:var(--ink);
+}
+
+.body {
+  flex:1;
+  overflow-y:auto;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Typography */
+
+.label {
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.06em;
+  color:var(--muted);
+}
+
+.h1 {
+  font-size:32px;
+  line-height:40px;
+  font-weight:600;
+  letter-spacing:-.02em;
+}
+
+.big {
+  font-size:44px;
+  line-height:52px;
+  font-weight:500;
+  letter-spacing:-.03em;
+}
+
+.muted {
+  color:var(--muted);
+}
+
+.small {
+  font-size:13px;
+  line-height:20px;
+}
+
+/* Controls */
+
+.btn {
+  height:48px;
+  width:100%;
+  border:0;
+  border-radius:8px;
+  background:var(--ink);
+  color:var(--bg);
+  font:600 15px 'Inter','Noto Sans Devanagari',sans-serif;
+  cursor:pointer;
+}
+
+.link {
+  background:none;
+  border:0;
+  padding:0;
+  font:500 14px 'Inter','Noto Sans Devanagari',sans-serif;
+  color:var(--ink);
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+.field {
+  height:48px;
+  width:100%;
+  border:1px solid #CBC6BD;
+  border-radius:8px;
+  background:transparent;
+  padding:0 16px;
+  font-size:16px;
+  color:var(--ink);
+}
+
+.field:focus {
+  outline:none;
+  border-color:var(--ink);
+}
+
+.hair {
+  border-top:1px solid var(--line);
+}
+
+.row {
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:13px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.center {
+  align-self:center;
+}
+
+/* Bottom navigation */
+
+.nav {
+  height:56px;
+  flex:none;
+  border-top:1px solid var(--line2);
+  display:flex;
+}
+
+.nav button {
+  flex:1;
+  border:0;
+  background:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  font:500 11px 'Inter','Noto Sans Devanagari',sans-serif;
+  color:var(--muted);
+}
+
+.nav button.on {
+  color:var(--ink);
+  font-weight:600;
+  border-top:2px solid var(--ink);
+  margin-top:-1px;
+}
+
+.nav svg {
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* Screen 1: Language */
+
+.lang-list {
+  border-top:1px solid var(--line);
+}
+
+.lang {
+  width:100%;
+  height:58px;
+  padding:0 8px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:20px;
+  color:var(--ink);
+  text-align:left;
+  cursor:pointer;
+}
+
+.lang small {
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.08em;
+}
+
+/* Screen 2: Home */
+
+.notice {
+  background:var(--panel);
+  border-radius:8px;
+  padding:13px 14px;
+  font-size:14px;
+  line-height:21px;
+}
+
+.emergency {
+  height:44px;
+  border:0;
+  border-radius:8px;
+  background:#FFDAD6;
+  color:#93000A;
+  font:600 14px 'Inter',sans-serif;
+  margin-top:18px;
+}
+
+.breakup {
+  border-top:1px solid var(--line);
+  margin:0 0 18px;
+}
+
+.breakup div {
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+
+.breakup div.total {
+  border-bottom:1.5px solid var(--ink);
+  font-weight:600;
+  font-size:15px;
+}
+
+/* Screen 3: Pay */
+
+.error {
+  border-left:2px solid var(--alert);
+  padding:4px 0 4px 12px;
+  margin-bottom:16px;
+}
+
+.error b {
+  display:block;
+  font-size:15px;
+  color:var(--alert);
+}
+
+.error span {
+  font-size:14px;
+  line-height:21px;
+  color:var(--ink2);
+}
+
+.counter {
+  position:absolute;
+  right:16px;
+  top:15px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+}
+
+/* Screen 4: Confirm */
+
+.queue {
+  border-top:1px solid var(--line);
+}
+
+.q {
+  width:100%;
+  padding:13px 12px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:none;
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  color:var(--ink);
+  font-family:inherit;
+}
+
+.q.on {
+  background:var(--panel);
+  border-left:2px solid var(--ink);
+}
+
+.q .a {
+  display:flex;
+  justify-content:space-between;
+  font-size:16px;
+  font-weight:600;
+}
+
+.q .a em {
+  font-style:normal;
+  font-weight:400;
+  color:var(--muted);
+}
+
+.q .b {
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.q .b i {
+  font-style:normal;
+  font-weight:600;
+  letter-spacing:.04em;
+}
+
+.claim {
+  margin-top:16px;
+  border:1px solid var(--line2);
+  border-radius:8px;
+  padding:14px 16px;
+  background:var(--panel);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.claim .amt {
+  font-size:30px;
+  font-weight:600;
+  letter-spacing:-.02em;
+}
+
+.claim .amt small {
+  font-size:14px;
+  font-weight:400;
+  color:var(--muted);
+  letter-spacing:0;
+}
+
+.reject {
+  align-self:center;
+  margin-top:14px;
+  background:none;
+  border:0;
+  font:600 15px 'Inter',sans-serif;
+  color:var(--emerg);
+  cursor:pointer;
+}
+
+/* Screen 5: Overview */
+
+.stat {
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.stat:first-of-type {
+  border-top:1px solid var(--line);
+}
+
+.stat .v {
+  font-size:34px;
+  line-height:42px;
+  font-weight:600;
+  letter-spacing:-.02em;
+}
+
+/* Screen 6: History */
+
+.log {
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.log .t {
+  font-size:15px;
+  line-height:22px;
+  font-weight:500;
+}
+
+.log .m {
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.log .m b {
+  font-weight:600;
+  letter-spacing:.03em;
+}
+
+.ok {
+  color:var(--ok)!important;
+}
+
+.no {
+  color:var(--alert)!important;
+}
+
+/* Carousel navigation */
+
+.prototype-viewer {
+  width:min(100%, 760px);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:56px minmax(0, 1fr) 56px;
+  align-items:center;
+  gap:18px;
+}
+
+.gallery {
+  min-width:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.gallery > div {
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.gallery > div[hidden] {
+  display:none;
+}
+
+.screen {
+  width:min(390px, 100%);
+  height:min(800px, calc(100vh - 190px));
+  min-height:620px;
+}
+
+.page-arrow {
+  width:52px;
+  height:52px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:var(--bg);
+  color:var(--ink);
+  font:400 38px/1 Inter,sans-serif;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+  transition:background .18s, transform .18s, opacity .18s;
+}
+
+.page-arrow:hover:not(:disabled) {
+  background:#fff;
+  transform:scale(1.06);
+}
+
+.page-arrow:disabled {
+  opacity:.28;
+  cursor:not-allowed;
+}
+
+.page-arrow:focus-visible,
+.dot:focus-visible {
+  outline:3px solid var(--ink);
+  outline-offset:4px;
+}
+
+.carousel-footer {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  margin:18px auto 0;
+  text-align:center;
+}
+
+.page-indicator {
+  color:var(--ink2);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.05em;
+}
+
+.page-dots {
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.dot {
+  width:9px;
+  height:9px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:#bdb8ae;
+  cursor:pointer;
+}
+
+.dot.active {
+  width:25px;
+  border-radius:10px;
+  background:var(--ink);
+}
+
+.carousel-hint {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+
+.back-home-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: #1e293b;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.back-home-btn:hover {
+    background: #334155;
+}
+
+
+/* Responsive layout */
+
+@media(max-width:600px) {
+  body {
+    padding:18px 10px;
+  }
+
+  h1.page {
+    font-size:17px;
+    margin-bottom:18px;
+  }
+
+  .prototype-viewer {
+    grid-template-columns:34px minmax(0,1fr) 34px;
+    gap:6px;
+  }
+
+  .page-arrow {
+    width:34px;
+    height:42px;
+    font-size:29px;
+  }
+
+  .screen {
+    width:100%;
+    height:min(760px, calc(100vh - 190px));
+    min-height:580px;
+  }
+
+  .cap {
+    font-size:10px;
+  }
+
+  .carousel-footer {
+    margin-top:14px;
+  }
+}
+
+@media(max-width:380px) {
+  .prototype-viewer {
+    grid-template-columns:28px minmax(0,1fr) 28px;
+    gap:4px;
+  }
+
+  .page-arrow {
+    width:28px;
+    height:38px;
+  }
+
+  .screen {
+    min-height:560px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .page-arrow {
+    transition:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="page">
+  FacilityCore: 6 prototype screens (Palm Court CHS, sample data)
+</h1>
+
+<div class="prototype-viewer" aria-label="FacilityCore prototype viewer">
+
+  <button class="page-arrow prev" id="prevPage"
+          type="button" aria-label="Previous screen" disabled>
+    <span aria-hidden="true">‹</span>
+  </button>
+
+  <div class="gallery" id="prototypeGallery">
+
+    <!-- SCREEN 1: LANGUAGE -->
+    <div>
+      <div class="cap">1 · LANGUAGE</div>
+
+      <section class="screen" id="s1">
+        <div class="body" style="padding-top:32px">
+
+          <span style="font-size:19px;font-weight:500">
+            FacilityCore
+          </span>
+
+          <h2 class="h1"
+              style="font-weight:500;margin:64px 0 30px;letter-spacing:-.015em">
+            Choose your language.
+          </h2>
+
+          <div class="lang-list">
+            <button class="lang">
+              <span>English</span>
+              <small>SELECTED</small>
+            </button>
+
+            <button class="lang">
+              <span>हिंदी</span>
+              <small></small>
+            </button>
+
+            <button class="lang">
+              <span>मराठी</span>
+              <small></small>
+            </button>
+          </div>
+
+          <button class="btn" style="margin-top:32px">
+            Continue
+          </button>
+
+          <span class="label"
+                style="margin-top:56px;letter-spacing:.08em">
+            COOPERATIVE HOUSING SOCIETY PORTAL
+          </span>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- SCREEN 2: RESIDENT HOME -->
+    <div>
+      <div class="cap">2 · RESIDENT HOME</div>
+
+      <section class="screen" id="s2">
+
+        <div class="bar">
+          <div class="t">
+            <span class="label" style="letter-spacing:.08em">
+              FACILITYCORE OS
+            </span>
+            <b>Home</b>
+          </div>
+          <div class="avatar"></div>
+        </div>
+
+        <div class="body">
+
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div style="display:flex;flex-direction:column">
+              <span style="font-size:18px;font-weight:500">B-1204</span>
+              <span class="small muted">Palm Court CHS</span>
+            </div>
+            <span style="font-size:14px;font-weight:500">Profile</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:30px 0 24px">
+            <span class="small muted" style="font-size:14px">
+              Due for March
+            </span>
+
+            <span class="big" style="margin:6px 0">₹4,850</span>
+
+            <span class="small muted" style="font-size:14px">
+              Pay by 10 March.
+            </span>
+
+            <button class="btn" style="margin-top:22px">
+              Pay now
+            </button>
+
+            <button class="link" style="margin-top:14px">
+              View breakup
+            </button>
+          </div>
+
+          <div class="breakup">
+            <div><span>Base maintenance</span><span>₹3,200</span></div>
+            <div><span>Lift AMC</span><span>₹450</span></div>
+            <div><span>CCTV</span><span>₹150</span></div>
+            <div><span>Security salaries</span><span>₹600</span></div>
+            <div><span>Common electricity</span><span>₹250</span></div>
+            <div><span>Sinking fund and repair fund</span><span>₹200</span></div>
+            <div class="total"><span>Due</span><span>₹4,850</span></div>
+          </div>
+
+          <div class="notice">
+            Water shutdown · 18 Mar, 10am to 4pm
+          </div>
+
+          <div style="display:flex;justify-content:space-between;padding:14px 0 6px">
+            <span class="label">MAINTENANCE PERIOD</span>
+            <span class="small">01 Mar – 31 Mar</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;padding:6px 0">
+            <span class="label">SOCIETY ACCOUNT</span>
+            <span class="small">Palm Court CHSL</span>
+          </div>
+
+          <button class="emergency">Emergency</button>
+
+          <button class="link center" style="margin-top:18px">
+            Change language
+          </button>
+
+        </div>
+
+        <nav class="nav">
+          <button class="on">
+            <svg viewBox="0 0 24 24">
+              <rect x="4" y="4" width="7" height="7"/>
+              <rect x="13" y="4" width="7" height="7"/>
+              <rect x="4" y="13" width="7" height="7"/>
+              <rect x="13" y="13" width="7" height="7"/>
+            </svg>
+            Home
+          </button>
+
+          <button>
+            <svg viewBox="0 0 24 24">
+              <path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/>
+            </svg>
+            Bills
+          </button>
+
+          <button>
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M9.5 9.5a2.5 2.5 0 115 0c0 1.5-2.5 2-2.5 4M12 17h.01"/>
+            </svg>
+            Help
+          </button>
+
+          <button>
+            <svg viewBox="0 0 24 24">
+              <path d="M6 16v-5a6 6 0 1112 0v5l2 2H4zM10 21h4"/>
+            </svg>
+            Notices
+          </button>
+        </nav>
+
+      </section>
+    </div>
+
+    <!-- SCREEN 3: PAY -->
+    <div>
+      <div class="cap">3 · PAY (UPI REFERENCE)</div>
+
+      <section class="screen" id="s3">
+
+        <div class="bar">
+          <div class="l">
+            <svg width="22" height="22" viewBox="0 0 24 24"
+                 fill="none" stroke="#1C1B19" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M11 6l-6 6 6 6"/>
+            </svg>
+
+            <div class="t">
+              <b>Pay</b>
+              <span class="label">B-1204</span>
+            </div>
+          </div>
+
+          <div class="avatar"></div>
+        </div>
+
+        <div class="body">
+
+          <div class="error">
+            <b>We could not match this reference.</b>
+            <span>
+              Please confirm the 12-digit transaction ID on your payment app receipt.
+            </span>
+          </div>
+
+          <h2 class="h1" style="font-weight:600">
+            I have paid.
+          </h2>
+
+          <span style="font-size:17px;font-weight:600;margin-top:10px">
+            ₹4,850 to Palm Court CHS.
+          </span>
+
+          <span class="small muted" style="font-size:14px;margin-top:4px">
+            UPI ID palmcourt@okbank · note B-1204
+          </span>
+
+          <div class="hair" style="margin:20px 0 16px"></div>
+
+          <label class="label" for="ref" style="margin-bottom:8px">
+            UPI REFERENCE
+          </label>
+
+          <div style="position:relative">
+            <input id="ref" class="field" type="text"
+                   inputmode="numeric" maxlength="12"
+                   placeholder="e.g. 408219827361"
+                   value="40821982"
+                   style="padding-right:64px">
+
+            <span class="counter">8/12</span>
+          </div>
+
+          <span class="small muted" style="margin-top:8px">
+            Also known as UTR or Bank Reference No. in GPay, PhonePe, or Paytm.
+          </span>
+
+          <button class="btn" style="margin-top:22px">
+            Submit
+          </button>
+
+          <button class="link center" style="margin-top:14px">
+            Cancel and return home
+          </button>
+
+          <span class="small muted center"
+                style="margin-top:18px;font-size:12px">
+            Demo only. No real payment is made.
+          </span>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- SCREEN 4: TREASURER CONFIRMS -->
+    <div>
+      <div class="cap">4 · TREASURER CONFIRMS</div>
+
+      <section class="screen" id="s4">
+
+        <div class="bar">
+          <div class="l">
+            <svg width="22" height="22" viewBox="0 0 24 24"
+                 fill="none" stroke="#1C1B19" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M11 6l-6 6 6 6"/>
+            </svg>
+
+            <div class="t">
+              <b>A9 Confirm Payments</b>
+              <span class="label">PALM COURT CHS</span>
+            </div>
+          </div>
+
+          <div class="avatar"></div>
+        </div>
+
+        <div class="body">
+
+          <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+            <span class="label">PENDING VERIFICATION · 3 RECEIPTS</span>
+            <span class="label">MAR 2026</span>
+          </div>
+
+          <div class="queue">
+
+            <button class="q on">
+              <span class="a">
+                <span>B-1204 <em>· Anita Kulkarni</em></span>
+                <span>₹4,850</span>
+              </span>
+              <span class="b">
+                <span>Ref 123456789012</span>
+                <i>UPI PENDING</i>
+              </span>
+            </button>
+
+            <button class="q">
+              <span class="a">
+                <span>A-202 <em>· Devendra Patil</em></span>
+                <span>₹4,850</span>
+              </span>
+              <span class="b">
+                <span>Ref 987654321098</span>
+                <i>NEFT TRANSFER</i>
+              </span>
+            </button>
+
+            <button class="q">
+              <span class="a">
+                <span>C-104 <em>· Rajeshwari Iyer</em></span>
+                <span>₹5,200</span>
+              </span>
+              <span class="b">
+                <span>Ref 456123789012</span>
+                <i>IMPS REF</i>
+              </span>
+            </button>
+
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)">
+
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <span class="label">
+                B-WING · 12TH FLOOR · UNIT B-1204
+              </span>
+
+              <span style="font-size:24px;line-height:30px;font-weight:600;letter-spacing:-.015em">
+                Anita Kulkarni
+              </span>
+            </div>
+
+            <div style="width:64px;height:56px;border:1px dashed #A8A398;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)">
+              Proof
+            </div>
+          </div>
+
+          <div class="claim">
+
+            <div style="display:flex;justify-content:space-between">
+              <span class="label">AMOUNT CLAIMED</span>
+              <span style="font-size:12px;font-weight:600;color:var(--ok)">
+                Matches Dues
+              </span>
+            </div>
+
+            <span class="amt">
+              ₹4,850
+              <small>Maintenance &amp; Water</small>
+            </span>
+
+            <div style="display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--line);font-size:14px">
+              <span class="muted">Bank UTR / Ref</span>
+              <span>123456789012</span>
+            </div>
+
+          </div>
+
+          <label class="label" for="reason" style="margin:16px 0 8px">
+            REASON
+          </label>
+
+          <input id="reason" class="field" type="text"
+                 placeholder="Only if you reject"
+                 style="background:#fff">
+
+          <button class="btn" style="margin-top:18px">
+            Confirm
+          </button>
+
+          <button class="reject">Reject</button>
+
+          <span class="small muted center" style="margin-top:14px">
+            Confirm stops the late fee.
+          </span>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- SCREEN 5: COMMITTEE OVERVIEW -->
+    <div>
+      <div class="cap">5 · COMMITTEE OVERVIEW</div>
+
+      <section class="screen" id="s5">
+
+        <div class="bar">
+          <div class="l">
+            <svg width="22" height="22" viewBox="0 0 24 24"
+                 fill="none" stroke="#1C1B19" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M11 6l-6 6 6 6"/>
+            </svg>
+
+            <div class="t">
+              <b>A3 Overview</b>
+              <span class="label">PALM COURT CHS</span>
+            </div>
+          </div>
+
+          <div class="avatar"></div>
+        </div>
+
+        <div class="body" style="padding-top:18px">
+
+          <span style="font-size:28px;line-height:34px;font-weight:600;letter-spacing:-.02em">
+            March 2026
+          </span>
+
+          <span class="label" style="margin:4px 0 14px">
+            PALM COURT CHS
+          </span>
+
+          <div class="stat">
+            <span class="label">COLLECTED</span>
+            <div class="v">₹3,20,000</div>
+          </div>
+
+          <div class="stat">
+            <span class="label">PENDING</span>
+            <div class="v">₹1,10,000</div>
+          </div>
+
+          <div class="stat">
+            <span class="label">OVERDUE</span>
+            <div class="v" style="color:var(--emerg)">₹42,500</div>
+          </div>
+
+          <div class="stat">
+            <span class="label">WAITING</span>
+            <div class="v">₹18,400</div>
+          </div>
+
+          <span class="label" style="margin:22px 0 8px">
+            WAITING FOR CONFIRMATION
+          </span>
+
+          <div class="hair">
+            <div class="row" style="font-size:15px;font-weight:500">
+              B-1204 · ₹4,850 · Ref 123456789012
+            </div>
+
+            <div class="row" style="font-size:15px;font-weight:500">
+              A-202 · ₹4,850 · Ref 987654321098
+            </div>
+
+            <div class="row" style="font-size:15px;font-weight:500">
+              C-104 · ₹5,200 · Ref 456123789012
+            </div>
+          </div>
+
+          <span class="label" style="margin:22px 0 8px">
+            OPEN COMPLAINTS
+          </span>
+
+          <div class="hair">
+            <div class="row" style="font-size:15px;font-weight:500">
+              <span>
+                B-1102 · Seepage ·
+                <b style="color:var(--emerg)">Day 8</b>
+              </span>
+            </div>
+          </div>
+
+          <span class="small muted" style="font-size:14px;margin-top:18px">
+            Fire NOC expires in 18 days
+          </span>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- SCREEN 6: HISTORY -->
+    <div>
+      <div class="cap">6 · HISTORY (CANNOT BE EDITED)</div>
+
+      <section class="screen" id="s6">
+
+        <div class="bar">
+          <div class="l">
+            <svg width="22" height="22" viewBox="0 0 24 24"
+                 fill="none" stroke="#1C1B19" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M11 6l-6 6 6 6"/>
+            </svg>
+
+            <div class="t">
+              <b>A17 History</b>
+              <span class="label">PALM COURT CHS</span>
+            </div>
+          </div>
+
+          <div class="avatar"></div>
+        </div>
+
+        <div class="body" style="padding-top:18px">
+
+          <label class="label" for="search" style="margin-bottom:8px">
+            SEARCH BY FLAT OR NAME
+          </label>
+
+          <input id="search" class="field" type="text"
+                 placeholder="Flat"
+                 style="background:var(--panel)">
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px">
+            <span class="label">THIS LIST CANNOT BE EDITED.</span>
+            <span class="label" style="color:var(--ink)">IMMUTABLE LOG</span>
+          </div>
+
+          <div class="hair">
+
+            <div class="log">
+              <span class="t">Just now · Treasurer confirmed ₹4,850</span>
+              <div class="m">
+                <span>B-1204</span>
+                <b class="ok">Verified</b>
+              </div>
+            </div>
+
+            <div class="log">
+              <span class="t">Just now · Anita Kulkarni reported reference 123456789012</span>
+              <div class="m">
+                <span>B-1204</span>
+                <b>UTR Log</b>
+              </div>
+            </div>
+
+            <div class="log">
+              <span class="t">Just now · March bills sent to residents</span>
+              <div class="m">
+                <span>All flats · ₹6,12,000</span>
+                <b>System batch</b>
+              </div>
+            </div>
+
+            <div class="log">
+              <span class="t">4 Mar, 10:12 · Treasurer confirmed ₹4,850</span>
+              <div class="m">
+                <span>B-1301</span>
+                <b class="ok">Verified</b>
+              </div>
+            </div>
+
+            <div class="log">
+              <span class="t">4 Mar, 09:02 · Sunita Rao reported reference …</span>
+              <div class="m">
+                <span>B-1301</span>
+                <b>UTR Log</b>
+              </div>
+            </div>
+
+            <div class="log">
+              <span class="t">1 Mar · March bills created</span>
+              <div class="m">
+                <span>All flats · ₹6,12,000</span>
+                <b>System batch</b>
+              </div>
+            </div>
+
+            <div class="log">
+              <span class="t">28 Feb, 18:40 · Treasurer confirmed ₹5,200</span>
+              <div class="m">
+                <span>A-0402</span>
+                <b class="ok">Verified</b>
+              </div>
+            </div>
+
+          </div>
+
+          <span class="small muted center"
+                style="font-size:12px;text-align:center;margin-top:20px">
+            Society audit trail. Entries cannot be edited or deleted.
+          </span>
+
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <button class="page-arrow next" id="nextPage"
+          type="button" aria-label="Next screen">
+    <span aria-hidden="true">›</span>
+  </button>
+
+</div>
+
+<!-- Carousel footer -->
+
+<div class="carousel-footer">
+
+  <div class="page-indicator" id="pageIndicator" aria-live="polite">
+    1 / 6
+  </div>
+
+  <div class="page-dots" id="pageDots"
+       aria-label="Choose prototype screen">
+
+    <button type="button" class="dot active"
+            aria-label="Go to screen 1" aria-current="step"></button>
+
+    <button type="button" class="dot"
+            aria-label="Go to screen 2"></button>
+
+    <button type="button" class="dot"
+            aria-label="Go to screen 3"></button>
+
+    <button type="button" class="dot"
+            aria-label="Go to screen 4"></button>
+
+    <button type="button" class="dot"
+            aria-label="Go to screen 5"></button>
+
+    <button type="button" class="dot"
+            aria-label="Go to screen 6"></button>
+
+  </div>
+
+  <p class="carousel-hint">
+    Use the arrows or keyboard ← → to move between screens
+  </p>
+
+</div>
+
+<a href="index.html" class="back-home-btn">
+    ← Back to Main Page
+</a>
+
+<script>
+(() => {
+  const gallery = document.getElementById("prototypeGallery");
+  const pages = Array.from(gallery.children);
+
+  const previous = document.getElementById("prevPage");
+  const next = document.getElementById("nextPage");
+
+  const indicator = document.getElementById("pageIndicator");
+  const dots = Array.from(document.querySelectorAll(".dot"));
+
+  let current = 0;
+
+  function showPage(index) {
+
+    current = Math.max(
+      0,
+      Math.min(index, pages.length - 1)
+    );
+
+    pages.forEach((page, i) => {
+      const active = i === current;
+
+      page.hidden = !active;
+
+      page.setAttribute(
+        "aria-hidden",
+        String(!active)
+      );
+    });
+
+    dots.forEach((dot, i) => {
+
+      const active = i === current;
+
+      dot.classList.toggle("active", active);
+
+      if (active) {
+        dot.setAttribute("aria-current", "step");
+      } else {
+        dot.removeAttribute("aria-current");
+      }
+
+    });
+
+    indicator.textContent =
+      `${current + 1} / ${pages.length}`;
+
+    previous.disabled = current === 0;
+
+    next.disabled =
+      current === pages.length - 1;
+
+  }
+
+  // Previous and next arrows
+
+  previous.addEventListener("click", () => {
+    showPage(current - 1);
+  });
+
+  next.addEventListener("click", () => {
+    showPage(current + 1);
+  });
+
+  // Clickable page indicators
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      showPage(i);
+    });
+  });
+
+  // Keyboard navigation
+
+  document.addEventListener("keydown", event => {
+
+    if (event.key === "ArrowLeft") {
+      showPage(current - 1);
+    }
+
+    if (event.key === "ArrowRight") {
+      showPage(current + 1);
+    }
+
+  });
+
+  // Start with the first screen
+
+  showPage(0);
+
+})();
+</script>
+
+</body>
+</html>

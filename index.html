@@ -895,13 +895,7 @@ document.querySelectorAll(".lang-btn").forEach(button => {
 });
 
 document.getElementById("prototypeLink").addEventListener("click", event => {
-  event.preventDefault();
-
-  if (PROTOTYPE_URL.trim()) {
-    window.open(PROTOTYPE_URL, "_blank", "noopener,noreferrer");
-  } else {
-    alert("Please add your prototype URL in the PROTOTYPE_URL setting near the bottom of index.html.");
-  }
+    window.location.href = "prototype.html";
 });
 
 document.getElementById("bookDemo").addEventListener("click", () => {
