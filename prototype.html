@@ -4,9 +4,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FacilityCore | Interactive 6-Screen Prototype</title>
+<title>FacilityCore | Interactive 6-Screen Demo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -29,45 +29,84 @@
 }
 
 body {
-  background:#E9E6DF;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255,255,255,.9), transparent 28%),
+    radial-gradient(circle at 90% 85%, rgba(210,220,205,.55), transparent 30%),
+    #E9E6DF;
   font-family:'Inter','Noto Sans Devanagari',sans-serif;
   color:var(--ink);
-  padding:32px 16px;
+  padding:38px 18px 25px;
+  min-height:100vh;
 }
 
 h1.page {
-  font-size:20px;
-  font-weight:600;
+  font-size:24px;
+  font-weight:700;
   text-align:center;
-  margin-bottom:24px;
+  margin-bottom:10px;
+  letter-spacing:-.7px;
+}
+
+.page-subtitle {
+  text-align:center;
+  color:#77736B;
+  font-size:13px;
+  margin-bottom:30px;
+  line-height:1.6;
+}
+
+.prototype-viewer {
+  width:min(100%, 850px);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:56px minmax(0, 1fr) 56px;
+  align-items:center;
+  gap:18px;
 }
 
 .gallery {
+  min-width:0;
   display:flex;
-  flex-wrap:wrap;
-  gap:32px;
   justify-content:center;
+  align-items:center;
+}
+
+.gallery > div {
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.gallery > div[hidden] {
+  display:none;
 }
 
 .cap {
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:.08em;
-  color:var(--muted);
-  margin-bottom:8px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.12em;
+  color:#6F6A63;
+  margin-bottom:12px;
   text-align:center;
 }
 
 /* Phone frame */
 
 .screen {
-  width:390px;
-  height:800px;
+  width:min(390px, 100%);
+  height:min(800px, calc(100vh - 210px));
+  min-height:620px;
   background:var(--bg);
-  border:1px solid var(--line);
+  border:1px solid #D4D0C7;
+  border-radius:27px;
   display:flex;
   flex-direction:column;
   overflow:hidden;
+  box-shadow:
+    0 24px 65px rgba(38,34,27,.13),
+    0 4px 12px rgba(38,34,27,.06);
+  position:relative;
 }
 
 .bar {
@@ -78,6 +117,7 @@ h1.page {
   display:flex;
   align-items:center;
   justify-content:space-between;
+  background:rgba(250,249,246,.96);
 }
 
 .bar .l {
@@ -101,6 +141,18 @@ h1.page {
   height:36px;
   border-radius:50%;
   background:var(--ink);
+  position:relative;
+}
+
+.avatar:after {
+  content:"";
+  position:absolute;
+  width:10px;
+  height:10px;
+  border:2px solid var(--bg);
+  border-radius:50%;
+  top:7px;
+  left:11px;
 }
 
 .body {
@@ -109,6 +161,7 @@ h1.page {
   padding:24px;
   display:flex;
   flex-direction:column;
+  scrollbar-width:thin;
 }
 
 /* Typography */
@@ -134,9 +187,7 @@ h1.page {
   letter-spacing:-.03em;
 }
 
-.muted {
-  color:var(--muted);
-}
+.muted { color:var(--muted); }
 
 .small {
   font-size:13px;
@@ -154,6 +205,12 @@ h1.page {
   color:var(--bg);
   font:600 15px 'Inter','Noto Sans Devanagari',sans-serif;
   cursor:pointer;
+  transition:background .2s, transform .2s;
+}
+
+.btn:hover {
+  background:#3A3934;
+  transform:translateY(-1px);
 }
 
 .link {
@@ -182,9 +239,7 @@ h1.page {
   border-color:var(--ink);
 }
 
-.hair {
-  border-top:1px solid var(--line);
-}
+.hair { border-top:1px solid var(--line); }
 
 .row {
   display:flex;
@@ -194,9 +249,7 @@ h1.page {
   border-bottom:1px solid var(--line);
 }
 
-.center {
-  align-self:center;
-}
+.center { align-self:center; }
 
 /* Bottom navigation */
 
@@ -205,6 +258,7 @@ h1.page {
   flex:none;
   border-top:1px solid var(--line2);
   display:flex;
+  background:var(--bg);
 }
 
 .nav button {
@@ -218,6 +272,7 @@ h1.page {
   gap:3px;
   font:500 11px 'Inter','Noto Sans Devanagari',sans-serif;
   color:var(--muted);
+  cursor:pointer;
 }
 
 .nav button.on {
@@ -239,8 +294,84 @@ h1.page {
 
 /* Screen 1: Language */
 
+#s1 {
+  background:
+    radial-gradient(ellipse at 90% 5%, rgba(255,255,255,.95), transparent 40%),
+    linear-gradient(155deg,#E7EDE3 0%,#F7F5EF 48%,#E8E4D9 100%);
+}
+
+#s1 .body {
+  position:relative;
+  background:
+    radial-gradient(circle at 90% 18%,rgba(255,255,255,.65),transparent 25%);
+}
+
+.brand-mark {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:-.5px;
+  position:relative;
+  z-index:1;
+}
+
+.brand-icon {
+  width:37px;
+  height:37px;
+  border-radius:11px;
+  background:#1F4938;
+  display:grid;
+  place-items:center;
+  color:white;
+  box-shadow:0 5px 15px rgba(31,73,56,.2);
+}
+
+.brand-icon svg {
+  width:23px;
+  height:23px;
+  fill:none;
+  stroke:white;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.lang-intro {
+  position:relative;
+  margin-top:70px;
+  z-index:1;
+}
+
+.lang-intro .eyebrow {
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.14em;
+  color:#587361;
+  margin-bottom:13px;
+}
+
+.lang-intro .h1 {
+  font-size:34px;
+  line-height:1.2;
+  font-weight:600;
+  max-width:290px;
+}
+
+.lang-intro p {
+  color:#706F66;
+  font-size:14px;
+  line-height:22px;
+  margin-top:12px;
+  max-width:280px;
+}
+
 .lang-list {
-  border-top:1px solid var(--line);
+  border-top:1px solid rgba(90,100,83,.25);
+  margin-top:34px;
+  position:relative;
+  z-index:1;
 }
 
 .lang {
@@ -248,21 +379,45 @@ h1.page {
   height:58px;
   padding:0 8px;
   border:0;
-  border-bottom:1px solid var(--line);
+  border-bottom:1px solid rgba(90,100,83,.25);
   background:none;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  font-size:20px;
+  font-size:19px;
   color:var(--ink);
   text-align:left;
   cursor:pointer;
+  transition:padding .2s,background .2s;
+}
+
+.lang:hover {
+  padding-left:14px;
+  background:rgba(255,255,255,.35);
 }
 
 .lang small {
-  font-size:11px;
-  font-weight:600;
+  font-size:10px;
+  font-weight:700;
   letter-spacing:.08em;
+  color:#315E45;
+}
+
+#s1 .btn {
+  margin-top:28px;
+  background:#1F4938;
+  box-shadow:0 7px 18px rgba(31,73,56,.16);
+}
+
+#s1 .btn:hover { background:#153A2B; }
+
+.lang-footer {
+  margin-top:auto;
+  padding-top:35px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  color:#77776B;
 }
 
 /* Screen 2: Home */
@@ -283,6 +438,7 @@ h1.page {
   color:#93000A;
   font:600 14px 'Inter',sans-serif;
   margin-top:18px;
+  cursor:pointer;
 }
 
 .breakup {
@@ -335,9 +491,7 @@ h1.page {
 
 /* Screen 4: Confirm */
 
-.queue {
-  border-top:1px solid var(--line);
-}
+.queue { border-top:1px solid var(--line); }
 
 .q {
   width:100%;
@@ -351,6 +505,7 @@ h1.page {
   gap:3px;
   color:var(--ink);
   font-family:inherit;
+  cursor:pointer;
 }
 
 .q.on {
@@ -363,6 +518,7 @@ h1.page {
   justify-content:space-between;
   font-size:16px;
   font-weight:600;
+  gap:8px;
 }
 
 .q .a em {
@@ -376,6 +532,7 @@ h1.page {
   justify-content:space-between;
   font-size:12px;
   color:var(--muted);
+  gap:8px;
 }
 
 .q .b i {
@@ -425,9 +582,7 @@ h1.page {
   border-bottom:1px solid var(--line);
 }
 
-.stat:first-of-type {
-  border-top:1px solid var(--line);
-}
+.stat:first-of-type { border-top:1px solid var(--line); }
 
 .stat .v {
   font-size:34px;
@@ -464,67 +619,29 @@ h1.page {
   letter-spacing:.03em;
 }
 
-.ok {
-  color:var(--ok)!important;
-}
+.ok { color:var(--ok)!important; }
+.no { color:var(--alert)!important; }
 
-.no {
-  color:var(--alert)!important;
-}
-
-/* Carousel navigation */
-
-.prototype-viewer {
-  width:min(100%, 760px);
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:56px minmax(0, 1fr) 56px;
-  align-items:center;
-  gap:18px;
-}
-
-.gallery {
-  min-width:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.gallery > div {
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.gallery > div[hidden] {
-  display:none;
-}
-
-.screen {
-  width:min(390px, 100%);
-  height:min(800px, calc(100vh - 190px));
-  min-height:620px;
-}
+/* Carousel controls */
 
 .page-arrow {
   width:52px;
   height:52px;
-  border:1px solid var(--line);
+  border:1px solid #D5D0C7;
   border-radius:50%;
-  background:var(--bg);
+  background:rgba(250,249,246,.95);
   color:var(--ink);
   font:400 38px/1 Inter,sans-serif;
   display:grid;
   place-items:center;
   cursor:pointer;
   box-shadow:0 4px 14px rgba(0,0,0,.08);
-  transition:background .18s, transform .18s, opacity .18s;
+  transition:background .18s,transform .18s,opacity .18s;
 }
 
 .page-arrow:hover:not(:disabled) {
   background:#fff;
-  transform:scale(1.06);
+  transform:scale(1.08);
 }
 
 .page-arrow:disabled {
@@ -542,15 +659,15 @@ h1.page {
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:10px;
-  margin:18px auto 0;
+  gap:11px;
+  margin:22px auto 0;
   text-align:center;
 }
 
 .page-indicator {
   color:var(--ink2);
   font-size:13px;
-  font-weight:600;
+  font-weight:700;
   letter-spacing:.05em;
 }
 
@@ -566,12 +683,13 @@ h1.page {
   padding:0;
   border:0;
   border-radius:50%;
-  background:#bdb8ae;
+  background:#BDB8AE;
   cursor:pointer;
+  transition:all .2s;
 }
 
 .dot.active {
-  width:25px;
+  width:26px;
   border-radius:10px;
   background:var(--ink);
 }
@@ -582,37 +700,51 @@ h1.page {
   line-height:1.5;
 }
 
+/* Back to main page */
+
+.back-home-wrap {
+  display:flex;
+  justify-content:center;
+  margin:34px auto 8px;
+}
 
 .back-home-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    background: #1e293b;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    transition: background 0.2s;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:13px 24px;
+  min-width:205px;
+  border:1px solid #1F4938;
+  border-radius:9px;
+  background:#1F4938;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  box-shadow:0 6px 18px rgba(31,73,56,.16);
+  transition:all .2s;
 }
 
 .back-home-btn:hover {
-    background: #334155;
+  background:#153A2B;
+  transform:translateY(-2px);
+  box-shadow:0 9px 22px rgba(31,73,56,.22);
 }
 
-
-/* Responsive layout */
+/* Responsive */
 
 @media(max-width:600px) {
-  body {
-    padding:18px 10px;
-  }
+  body { padding:24px 10px 20px; }
 
   h1.page {
-    font-size:17px;
-    margin-bottom:18px;
+    font-size:19px;
+    margin-bottom:7px;
+  }
+
+  .page-subtitle {
+    font-size:12px;
+    margin-bottom:22px;
   }
 
   .prototype-viewer {
@@ -628,17 +760,16 @@ h1.page {
 
   .screen {
     width:100%;
-    height:min(760px, calc(100vh - 190px));
+    height:min(760px,calc(100vh - 200px));
     min-height:580px;
+    border-radius:20px;
   }
 
-  .cap {
-    font-size:10px;
-  }
+  .cap { font-size:10px; }
 
-  .carousel-footer {
-    margin-top:14px;
-  }
+  .carousel-footer { margin-top:16px; }
+
+  .back-home-wrap { margin-top:27px; }
 }
 
 @media(max-width:380px) {
@@ -652,14 +783,17 @@ h1.page {
     height:38px;
   }
 
-  .screen {
-    min-height:560px;
-  }
+  .screen { min-height:560px; }
+
+  .body { padding:20px; }
+
+  .lang-intro { margin-top:52px; }
 }
 
 @media(prefers-reduced-motion:reduce) {
-  .page-arrow {
-    transition:none;
+  *, *:before, *:after {
+    scroll-behavior:auto!important;
+    transition:none!important;
   }
 }
 </style>
@@ -667,9 +801,11 @@ h1.page {
 
 <body>
 
-<h1 class="page">
-  FacilityCore: 6 prototype screens (Palm Court CHS, sample data)
-</h1>
+<h1 class="page">FacilityCore</h1>
+<p class="page-subtitle">
+  A smarter way to manage cooperative housing societies.
+  Explore the six-screen interactive prototype.
+</p>
 
 <div class="prototype-viewer" aria-label="FacilityCore prototype viewer">
 
@@ -685,16 +821,27 @@ h1.page {
       <div class="cap">1 · LANGUAGE</div>
 
       <section class="screen" id="s1">
-        <div class="body" style="padding-top:32px">
+        <div class="body" style="padding-top:30px">
 
-          <span style="font-size:19px;font-weight:500">
-            FacilityCore
-          </span>
+          <div class="brand-mark">
+            <div class="brand-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 11.5 12 4l9 7.5"/>
+                <path d="M5.5 10v10h13V10"/>
+                <path d="M9 20v-6h6v6"/>
+              </svg>
+            </div>
+            <span>FacilityCore</span>
+          </div>
 
-          <h2 class="h1"
-              style="font-weight:500;margin:64px 0 30px;letter-spacing:-.015em">
-            Choose your language.
-          </h2>
+          <div class="lang-intro">
+            <div class="eyebrow">WELCOME TO FACILITYCORE</div>
+            <h2 class="h1">Choose your language.</h2>
+            <p>
+              Your society, your community, your language.
+              Select how you would like to continue.
+            </p>
+          </div>
 
           <div class="lang-list">
             <button class="lang">
@@ -713,12 +860,11 @@ h1.page {
             </button>
           </div>
 
-          <button class="btn" style="margin-top:32px">
+          <button class="btn" style="margin-top:28px">
             Continue
           </button>
 
-          <span class="label"
-                style="margin-top:56px;letter-spacing:.08em">
+          <span class="lang-footer">
             COOPERATIVE HOUSING SOCIETY PORTAL
           </span>
 
@@ -734,9 +880,7 @@ h1.page {
 
         <div class="bar">
           <div class="t">
-            <span class="label" style="letter-spacing:.08em">
-              FACILITYCORE OS
-            </span>
+            <span class="label" style="letter-spacing:.08em">FACILITYCORE OS</span>
             <b>Home</b>
           </div>
           <div class="avatar"></div>
@@ -753,23 +897,11 @@ h1.page {
           </div>
 
           <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:30px 0 24px">
-            <span class="small muted" style="font-size:14px">
-              Due for March
-            </span>
-
+            <span class="small muted" style="font-size:14px">Due for March</span>
             <span class="big" style="margin:6px 0">₹4,850</span>
-
-            <span class="small muted" style="font-size:14px">
-              Pay by 10 March.
-            </span>
-
-            <button class="btn" style="margin-top:22px">
-              Pay now
-            </button>
-
-            <button class="link" style="margin-top:14px">
-              View breakup
-            </button>
+            <span class="small muted" style="font-size:14px">Pay by 10 March.</span>
+            <button class="btn" style="margin-top:22px">Pay now</button>
+            <button class="link" style="margin-top:14px">View breakup</button>
           </div>
 
           <div class="breakup">
@@ -782,9 +914,7 @@ h1.page {
             <div class="total"><span>Due</span><span>₹4,850</span></div>
           </div>
 
-          <div class="notice">
-            Water shutdown · 18 Mar, 10am to 4pm
-          </div>
+          <div class="notice">Water shutdown · 18 Mar, 10am to 4pm</div>
 
           <div style="display:flex;justify-content:space-between;padding:14px 0 6px">
             <span class="label">MAINTENANCE PERIOD</span>
@@ -797,10 +927,7 @@ h1.page {
           </div>
 
           <button class="emergency">Emergency</button>
-
-          <button class="link center" style="margin-top:18px">
-            Change language
-          </button>
+          <button class="link center" style="margin-top:18px">Change language</button>
 
         </div>
 
@@ -854,13 +981,11 @@ h1.page {
                  stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 12H5M11 6l-6 6 6 6"/>
             </svg>
-
             <div class="t">
               <b>Pay</b>
               <span class="label">B-1204</span>
             </div>
           </div>
-
           <div class="avatar"></div>
         </div>
 
@@ -868,14 +993,10 @@ h1.page {
 
           <div class="error">
             <b>We could not match this reference.</b>
-            <span>
-              Please confirm the 12-digit transaction ID on your payment app receipt.
-            </span>
+            <span>Please confirm the 12-digit transaction ID on your payment app receipt.</span>
           </div>
 
-          <h2 class="h1" style="font-weight:600">
-            I have paid.
-          </h2>
+          <h2 class="h1" style="font-weight:600">I have paid.</h2>
 
           <span style="font-size:17px;font-weight:600;margin-top:10px">
             ₹4,850 to Palm Court CHS.
@@ -887,9 +1008,7 @@ h1.page {
 
           <div class="hair" style="margin:20px 0 16px"></div>
 
-          <label class="label" for="ref" style="margin-bottom:8px">
-            UPI REFERENCE
-          </label>
+          <label class="label" for="ref" style="margin-bottom:8px">UPI REFERENCE</label>
 
           <div style="position:relative">
             <input id="ref" class="field" type="text"
@@ -897,24 +1016,17 @@ h1.page {
                    placeholder="e.g. 408219827361"
                    value="40821982"
                    style="padding-right:64px">
-
-            <span class="counter">8/12</span>
+            <span class="counter" id="refCounter">8/12</span>
           </div>
 
           <span class="small muted" style="margin-top:8px">
             Also known as UTR or Bank Reference No. in GPay, PhonePe, or Paytm.
           </span>
 
-          <button class="btn" style="margin-top:22px">
-            Submit
-          </button>
+          <button class="btn" style="margin-top:22px">Submit</button>
+          <button class="link center" style="margin-top:14px">Cancel and return home</button>
 
-          <button class="link center" style="margin-top:14px">
-            Cancel and return home
-          </button>
-
-          <span class="small muted center"
-                style="margin-top:18px;font-size:12px">
+          <span class="small muted center" style="margin-top:18px;font-size:12px">
             Demo only. No real payment is made.
           </span>
 
@@ -935,13 +1047,11 @@ h1.page {
                  stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 12H5M11 6l-6 6 6 6"/>
             </svg>
-
             <div class="t">
               <b>A9 Confirm Payments</b>
               <span class="label">PALM COURT CHS</span>
             </div>
           </div>
-
           <div class="avatar"></div>
         </div>
 
@@ -990,55 +1100,34 @@ h1.page {
           </div>
 
           <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)">
-
             <div style="display:flex;flex-direction:column;gap:4px">
-              <span class="label">
-                B-WING · 12TH FLOOR · UNIT B-1204
-              </span>
-
+              <span class="label">B-WING · 12TH FLOOR · UNIT B-1204</span>
               <span style="font-size:24px;line-height:30px;font-weight:600;letter-spacing:-.015em">
                 Anita Kulkarni
               </span>
             </div>
-
             <div style="width:64px;height:56px;border:1px dashed #A8A398;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)">
               Proof
             </div>
           </div>
 
           <div class="claim">
-
             <div style="display:flex;justify-content:space-between">
               <span class="label">AMOUNT CLAIMED</span>
-              <span style="font-size:12px;font-weight:600;color:var(--ok)">
-                Matches Dues
-              </span>
+              <span style="font-size:12px;font-weight:600;color:var(--ok)">Matches Dues</span>
             </div>
-
-            <span class="amt">
-              ₹4,850
-              <small>Maintenance &amp; Water</small>
-            </span>
-
+            <span class="amt">₹4,850 <small>Maintenance &amp; Water</small></span>
             <div style="display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--line);font-size:14px">
               <span class="muted">Bank UTR / Ref</span>
               <span>123456789012</span>
             </div>
-
           </div>
 
-          <label class="label" for="reason" style="margin:16px 0 8px">
-            REASON
-          </label>
-
+          <label class="label" for="reason" style="margin:16px 0 8px">REASON</label>
           <input id="reason" class="field" type="text"
-                 placeholder="Only if you reject"
-                 style="background:#fff">
+                 placeholder="Only if you reject" style="background:#fff">
 
-          <button class="btn" style="margin-top:18px">
-            Confirm
-          </button>
-
+          <button class="btn" style="margin-top:18px">Confirm</button>
           <button class="reject">Reject</button>
 
           <span class="small muted center" style="margin-top:14px">
@@ -1062,13 +1151,11 @@ h1.page {
                  stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 12H5M11 6l-6 6 6 6"/>
             </svg>
-
             <div class="t">
               <b>A3 Overview</b>
               <span class="label">PALM COURT CHS</span>
             </div>
           </div>
-
           <div class="avatar"></div>
         </div>
 
@@ -1078,9 +1165,7 @@ h1.page {
             March 2026
           </span>
 
-          <span class="label" style="margin:4px 0 14px">
-            PALM COURT CHS
-          </span>
+          <span class="label" style="margin:4px 0 14px">PALM COURT CHS</span>
 
           <div class="stat">
             <span class="label">COLLECTED</span>
@@ -1102,34 +1187,19 @@ h1.page {
             <div class="v">₹18,400</div>
           </div>
 
-          <span class="label" style="margin:22px 0 8px">
-            WAITING FOR CONFIRMATION
-          </span>
+          <span class="label" style="margin:22px 0 8px">WAITING FOR CONFIRMATION</span>
 
           <div class="hair">
-            <div class="row" style="font-size:15px;font-weight:500">
-              B-1204 · ₹4,850 · Ref 123456789012
-            </div>
-
-            <div class="row" style="font-size:15px;font-weight:500">
-              A-202 · ₹4,850 · Ref 987654321098
-            </div>
-
-            <div class="row" style="font-size:15px;font-weight:500">
-              C-104 · ₹5,200 · Ref 456123789012
-            </div>
+            <div class="row" style="font-size:15px;font-weight:500">B-1204 · ₹4,850 · Ref 123456789012</div>
+            <div class="row" style="font-size:15px;font-weight:500">A-202 · ₹4,850 · Ref 987654321098</div>
+            <div class="row" style="font-size:15px;font-weight:500">C-104 · ₹5,200 · Ref 456123789012</div>
           </div>
 
-          <span class="label" style="margin:22px 0 8px">
-            OPEN COMPLAINTS
-          </span>
+          <span class="label" style="margin:22px 0 8px">OPEN COMPLAINTS</span>
 
           <div class="hair">
             <div class="row" style="font-size:15px;font-weight:500">
-              <span>
-                B-1102 · Seepage ·
-                <b style="color:var(--emerg)">Day 8</b>
-              </span>
+              <span>B-1102 · Seepage · <b style="color:var(--emerg)">Day 8</b></span>
             </div>
           </div>
 
@@ -1154,13 +1224,11 @@ h1.page {
                  stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 12H5M11 6l-6 6 6 6"/>
             </svg>
-
             <div class="t">
               <b>A17 History</b>
               <span class="label">PALM COURT CHS</span>
             </div>
           </div>
-
           <div class="avatar"></div>
         </div>
 
@@ -1171,8 +1239,7 @@ h1.page {
           </label>
 
           <input id="search" class="field" type="text"
-                 placeholder="Flat"
-                 style="background:var(--panel)">
+                 placeholder="Flat" style="background:var(--panel)">
 
           <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px">
             <span class="label">THIS LIST CANNOT BE EDITED.</span>
@@ -1183,58 +1250,37 @@ h1.page {
 
             <div class="log">
               <span class="t">Just now · Treasurer confirmed ₹4,850</span>
-              <div class="m">
-                <span>B-1204</span>
-                <b class="ok">Verified</b>
-              </div>
+              <div class="m"><span>B-1204</span><b class="ok">Verified</b></div>
             </div>
 
             <div class="log">
               <span class="t">Just now · Anita Kulkarni reported reference 123456789012</span>
-              <div class="m">
-                <span>B-1204</span>
-                <b>UTR Log</b>
-              </div>
+              <div class="m"><span>B-1204</span><b>UTR Log</b></div>
             </div>
 
             <div class="log">
               <span class="t">Just now · March bills sent to residents</span>
-              <div class="m">
-                <span>All flats · ₹6,12,000</span>
-                <b>System batch</b>
-              </div>
+              <div class="m"><span>All flats · ₹6,12,000</span><b>System batch</b></div>
             </div>
 
             <div class="log">
               <span class="t">4 Mar, 10:12 · Treasurer confirmed ₹4,850</span>
-              <div class="m">
-                <span>B-1301</span>
-                <b class="ok">Verified</b>
-              </div>
+              <div class="m"><span>B-1301</span><b class="ok">Verified</b></div>
             </div>
 
             <div class="log">
               <span class="t">4 Mar, 09:02 · Sunita Rao reported reference …</span>
-              <div class="m">
-                <span>B-1301</span>
-                <b>UTR Log</b>
-              </div>
+              <div class="m"><span>B-1301</span><b>UTR Log</b></div>
             </div>
 
             <div class="log">
               <span class="t">1 Mar · March bills created</span>
-              <div class="m">
-                <span>All flats · ₹6,12,000</span>
-                <b>System batch</b>
-              </div>
+              <div class="m"><span>All flats · ₹6,12,000</span><b>System batch</b></div>
             </div>
 
             <div class="log">
               <span class="t">28 Feb, 18:40 · Treasurer confirmed ₹5,200</span>
-              <div class="m">
-                <span>A-0402</span>
-                <b class="ok">Verified</b>
-              </div>
+              <div class="m"><span>A-0402</span><b class="ok">Verified</b></div>
             </div>
 
           </div>
@@ -1265,27 +1311,13 @@ h1.page {
     1 / 6
   </div>
 
-  <div class="page-dots" id="pageDots"
-       aria-label="Choose prototype screen">
-
-    <button type="button" class="dot active"
-            aria-label="Go to screen 1" aria-current="step"></button>
-
-    <button type="button" class="dot"
-            aria-label="Go to screen 2"></button>
-
-    <button type="button" class="dot"
-            aria-label="Go to screen 3"></button>
-
-    <button type="button" class="dot"
-            aria-label="Go to screen 4"></button>
-
-    <button type="button" class="dot"
-            aria-label="Go to screen 5"></button>
-
-    <button type="button" class="dot"
-            aria-label="Go to screen 6"></button>
-
+  <div class="page-dots" id="pageDots" aria-label="Choose prototype screen">
+    <button type="button" class="dot active" aria-label="Go to screen 1" aria-current="step"></button>
+    <button type="button" class="dot" aria-label="Go to screen 2"></button>
+    <button type="button" class="dot" aria-label="Go to screen 3"></button>
+    <button type="button" class="dot" aria-label="Go to screen 4"></button>
+    <button type="button" class="dot" aria-label="Go to screen 5"></button>
+    <button type="button" class="dot" aria-label="Go to screen 6"></button>
   </div>
 
   <p class="carousel-hint">
@@ -1294,9 +1326,14 @@ h1.page {
 
 </div>
 
-<a href="index.html" class="back-home-btn">
-    ← Back to Main Page
-</a>
+<!-- Back to Main Page at the bottom -->
+
+<div class="back-home-wrap">
+  <a href="index.html" class="back-home-btn">
+    <span aria-hidden="true">←</span>
+    Back to Main Page
+  </a>
+</div>
 
 <script>
 (() => {
@@ -1312,27 +1349,16 @@ h1.page {
   let current = 0;
 
   function showPage(index) {
-
-    current = Math.max(
-      0,
-      Math.min(index, pages.length - 1)
-    );
+    current = Math.max(0, Math.min(index, pages.length - 1));
 
     pages.forEach((page, i) => {
       const active = i === current;
-
       page.hidden = !active;
-
-      page.setAttribute(
-        "aria-hidden",
-        String(!active)
-      );
+      page.setAttribute("aria-hidden", String(!active));
     });
 
     dots.forEach((dot, i) => {
-
       const active = i === current;
-
       dot.classList.toggle("active", active);
 
       if (active) {
@@ -1340,55 +1366,76 @@ h1.page {
       } else {
         dot.removeAttribute("aria-current");
       }
-
     });
 
-    indicator.textContent =
-      `${current + 1} / ${pages.length}`;
-
+    indicator.textContent = `${current + 1} / ${pages.length}`;
     previous.disabled = current === 0;
-
-    next.disabled =
-      current === pages.length - 1;
-
+    next.disabled = current === pages.length - 1;
   }
 
-  // Previous and next arrows
-
-  previous.addEventListener("click", () => {
-    showPage(current - 1);
-  });
-
-  next.addEventListener("click", () => {
-    showPage(current + 1);
-  });
-
-  // Clickable page indicators
+  previous.addEventListener("click", () => showPage(current - 1));
+  next.addEventListener("click", () => showPage(current + 1));
 
   dots.forEach((dot, i) => {
-    dot.addEventListener("click", () => {
-      showPage(i);
+    dot.addEventListener("click", () => showPage(i));
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "ArrowLeft") showPage(current - 1);
+    if (event.key === "ArrowRight") showPage(current + 1);
+  });
+
+  // Update UPI reference character count
+  const refInput = document.getElementById("ref");
+  const refCounter = document.getElementById("refCounter");
+
+  if (refInput && refCounter) {
+    refInput.addEventListener("input", () => {
+      refCounter.textContent = `${refInput.value.length}/12`;
+    });
+  }
+
+  // Select language in the first screen
+  const languageButtons = document.querySelectorAll("#s1 .lang");
+
+  languageButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      languageButtons.forEach(item => {
+        const label = item.querySelector("small");
+        if (label) label.textContent = "";
+      });
+
+      const selectedLabel = button.querySelector("small");
+      if (selectedLabel) selectedLabel.textContent = "SELECTED";
     });
   });
 
-  // Keyboard navigation
+  // Select a payment in the treasurer screen
+  const queueButtons = document.querySelectorAll("#s4 .q");
 
-  document.addEventListener("keydown", event => {
-
-    if (event.key === "ArrowLeft") {
-      showPage(current - 1);
-    }
-
-    if (event.key === "ArrowRight") {
-      showPage(current + 1);
-    }
-
+  queueButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      queueButtons.forEach(item => item.classList.remove("on"));
+      button.classList.add("on");
+    });
   });
 
-  // Start with the first screen
+  // Search the sample history
+  const historySearch = document.getElementById("search");
+
+  if (historySearch) {
+    historySearch.addEventListener("input", () => {
+      const term = historySearch.value.toLowerCase();
+
+      document.querySelectorAll("#s6 .log").forEach(log => {
+        log.style.display = log.textContent.toLowerCase().includes(term)
+          ? "flex"
+          : "none";
+      });
+    });
+  }
 
   showPage(0);
-
 })();
 </script>
 

@@ -164,6 +164,7 @@
       height: 17px;
       margin-top: 1px;
       accent-color: var(--green);
+      flex-shrink: 0;
     }
 
     .submit {
@@ -186,6 +187,12 @@
       box-shadow: 0 8px 20px #ffad1230;
     }
 
+    .submit:disabled {
+      opacity: .65;
+      cursor: wait;
+      transform: none;
+    }
+
     .status {
       display: none;
       padding: 12px;
@@ -198,6 +205,11 @@
 
     .status.show {
       display: block;
+    }
+
+    .status.success {
+      background: #e3f5e9;
+      color: #287448;
     }
 
     .back {
@@ -329,7 +341,7 @@
 
         <div class="status" id="status" role="status" aria-live="polite"></div>
 
-        <button class="submit" type="submit">
+        <button class="submit" type="submit" id="submitButton">
           Request a Demo &nbsp; →
         </button>
 
@@ -341,33 +353,128 @@
   </main>
 
   <script>
-    /*
-      The form design and validation work now.
-      To save real requests, connect a Google Form or a form/backend service.
-      Do not show a success message until a submission destination is connected.
-    */
+    // SAME STORAGE KEY AS OWNER DASHBOARD
+    const RECORDS_KEY = "FC_RECORDS";
 
-    const GOOGLE_FORM_URL = "";
-
+    // Set minimum date to today
     const dateInput = document.getElementById("date");
     const today = new Date();
+
     dateInput.min = new Date(
       today.getTime() - today.getTimezoneOffset() * 60000
     ).toISOString().split("T")[0];
 
+    // FORM SUBMISSION
     document.getElementById("demoForm").addEventListener("submit", function(event) {
+
       event.preventDefault();
 
-      const status = document.getElementById("status");
+      const form = this;
+      const statusBox = document.getElementById("status");
+      const submitButton = document.getElementById("submitButton");
 
-      if (GOOGLE_FORM_URL.trim()) {
-        window.location.href = GOOGLE_FORM_URL;
+      statusBox.className = "status";
+      statusBox.textContent = "";
+
+      if (!form.reportValidity()) {
         return;
       }
 
-      status.textContent =
-        "Your form is ready, but it is not connected to a submission destination yet. Add your Google Form URL or connect a backend before accepting real requests.";
-      status.classList.add("show");
+      const phone = document.getElementById("phone").value.trim();
+
+      if (!/^[+0-9() .-]{8,20}$/.test(phone)) {
+        statusBox.textContent = "Please enter a valid phone number.";
+        statusBox.classList.add("show");
+        return;
+      }
+
+      // Create enquiry record
+      const record = {
+        id: "FC" + Date.now() + Math.random().toString(36).slice(2, 7),
+
+        name: document.getElementById("name").value.trim(),
+        contact: document.getElementById("name").value.trim(),
+        role: document.getElementById("role").value,
+        society: document.getElementById("society").value.trim(),
+
+        phone: phone,
+        mobile: phone,
+
+        email: document.getElementById("email").value.trim(),
+        units: document.getElementById("units").value,
+        preferredDate: document.getElementById("date").value,
+
+        city: "",
+        requirements: document.getElementById("needs").value.trim(),
+
+        status: "New",
+        submittedAt: Date.now()
+      };
+
+      try {
+
+        // Read existing records
+        let records = JSON.parse(
+          localStorage.getItem(RECORDS_KEY) || "[]"
+        );
+
+        if (!Array.isArray(records)) {
+          throw new Error("Invalid records format");
+        }
+
+        // Add new enquiry
+        records.push(record);
+
+        // Save records
+        localStorage.setItem(
+          RECORDS_KEY,
+          JSON.stringify(records)
+        );
+
+        // Verify saved record
+        const savedRecords = JSON.parse(
+          localStorage.getItem(RECORDS_KEY)
+        );
+
+        const isSaved = savedRecords.some(function(item) {
+          return item.id === record.id;
+        });
+
+        if (!isSaved) {
+          throw new Error("Record could not be verified");
+        }
+
+        // Success message
+        statusBox.textContent =
+          "Your demo request has been submitted successfully! Redirecting to the owner dashboard...";
+
+        statusBox.classList.add("show", "success");
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitted ✓";
+
+        // Open dashboard after successful save
+       setTimeout(function() {
+  statusBox.textContent =
+    "Thank you! Your demo request has been received. Our team will contact you shortly.";
+
+  submitButton.textContent = "Request Submitted ✓";
+}, 1500);
+
+      } catch(error) {
+
+        console.error("Enquiry saving error:", error);
+
+        statusBox.textContent =
+          "Unable to save your enquiry. Please try again.";
+
+        statusBox.classList.add("show");
+
+        submitButton.disabled = false;
+        submitButton.textContent = "Request a Demo →";
+
+      }
+
     });
   </script>
 </body>

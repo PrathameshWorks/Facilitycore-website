@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FacilityCore Owner Dashboard</title>
+  <style>
+    :root {
+      --green:#164b38;
+      --dark:#103b2c;
+      --orange:#e99551;
+      --cream:#f5f7f2;
+      --white:#fff;
+      --text:#24352b;
+      --muted:#7b887f;
+      --border:#e5ebe5;
+      --red:#c74444;
+    }
+
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--cream);
+      color:var(--text);
+    }
+    button,input,select,textarea { font:inherit; }
+    button {
+      border:0;
+      border-radius:8px;
+      padding:11px 15px;
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+    }
+    button:hover:not(:disabled) {
+      transform:translateY(-1px);
+      filter:brightness(.96);
+    }
+    button:disabled { opacity:.55; cursor:not-allowed; }
+    .primary { background:var(--green); color:white; }
+    .orange { background:var(--orange); color:#292015; }
+    .secondary { background:#edf2ed; color:var(--green); }
+    .danger { background:#fff0f0; color:var(--red); }
+
+    .logo {
+      border-radius:16px;
+      background:var(--green);
+      display:grid;
+      place-items:center;
+    }
+    .brand-name {
+      font-size:27px;
+      font-weight:800;
+      color:var(--green);
+    }
+    .brand-name span { color:var(--orange); }
+
+    label {
+      display:block;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:7px;
+      color:#43564a;
+    }
+    input,select,textarea {
+      width:100%;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      outline:none;
+      background:white;
+      color:var(--text);
+      font-size:13px;
+    }
+    input:focus,select:focus,textarea:focus {
+      border-color:var(--green);
+      box-shadow:0 0 0 3px #164b3812;
+    }
+
+    header {
+      background:var(--green);
+      color:white;
+      padding:15px 5%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      box-shadow:0 3px 15px #102e201c;
+    }
+    .header-brand { display:flex;align-items:center;gap:11px; }
+    .header-brand .logo {
+      width:44px;height:44px;background:white;margin:0;border-radius:11px;
+    }
+    .header-brand .logo svg { width:31px;height:31px; }
+    .header-brand .brand-name { color:white;font-size:22px; }
+    .header-right small { color:#d9e7de;font-size:12px; }
+
+    main { max-width:1450px;margin:auto;padding:30px 5%; }
+    .top {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      flex-wrap:wrap;
+      margin-bottom:23px;
+    }
+    h1 { color:var(--green);font-size:28px;margin:0 0 7px; }
+    .sub { color:var(--muted);font-size:14px; }
+    .top-actions { display:flex;gap:9px;flex-wrap:wrap; }
+
+    .stats {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:15px;
+      margin-bottom:22px;
+    }
+    .stat,.panel {
+      background:white;
+      border:1px solid var(--border);
+      border-radius:13px;
+      box-shadow:0 3px 12px #1c3d2809;
+    }
+    .stat { padding:20px; }
+    .stat-label {
+      color:var(--muted);
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+    }
+    .stat-number {
+      font-size:31px;
+      font-weight:800;
+      margin-top:10px;
+      color:var(--green);
+    }
+    .panel { padding:22px;margin-bottom:22px; }
+    .panel-heading {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:19px;
+    }
+    .panel h2 { font-size:17px;margin:0;color:var(--green); }
+
+    .form-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:15px;
+    }
+    .field.full { grid-column:1/-1; }
+    textarea { min-height:80px;resize:vertical; }
+    .form-actions { display:flex;gap:10px;flex-wrap:wrap;margin-top:18px; }
+
+    .toolbar { display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px; }
+    .toolbar input { max-width:340px; }
+    .toolbar select { max-width:190px; }
+    .table-wrap {
+      width:100%;
+      overflow-x:auto;
+      border:1px solid var(--border);
+      border-radius:9px;
+    }
+    table {
+      width:100%;
+      min-width:1100px;
+      border-collapse:collapse;
+      font-size:13px;
+    }
+    th {
+      text-align:left;
+      background:#f1f5f0;
+      color:#65766a;
+      padding:14px 12px;
+      font-size:11px;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    td {
+      padding:13px 12px;
+      border-bottom:1px solid var(--border);
+      vertical-align:middle;
+      max-width:230px;
+      overflow-wrap:anywhere;
+    }
+    tbody tr:hover { background:#f9fbf8; }
+    tbody tr:last-child td { border-bottom:0; }
+    .status {
+      display:inline-block;
+      border-radius:30px;
+      padding:6px 10px;
+      font-size:11px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .New { background:#fff2df;color:#9a641b; }
+    .Contacted { background:#e7f0ff;color:#315f9c; }
+    .Converted { background:#e3f5e9;color:#287448; }
+    .Rejected { background:#ffe9e9;color:#a63b3b; }
+    .actions { display:flex;gap:7px; }
+    .actions button { padding:8px 10px;font-size:11px; }
+    .empty,.loading { text-align:center;color:var(--muted);padding:28px; }
+
+    #message {
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      padding:14px 18px;
+      border-radius:9px;
+      background:var(--green);
+      color:white;
+      display:none;
+      z-index:100;
+      max-width:90%;
+      box-shadow:0 5px 20px #0002;
+      font-size:13px;
+    }
+    #message.error { background:var(--red); }
+
+    @media(max-width:900px) {
+      main { padding:24px 4%; }
+      header { padding:14px 4%; }
+      .stats { grid-template-columns:repeat(2,1fr); }
+      .form-grid { grid-template-columns:repeat(2,1fr); }
+    }
+    @media(max-width:600px) {
+      header { align-items:flex-start;flex-wrap:wrap; }
+      main { padding:19px 4%; }
+      h1 { font-size:23px; }
+      .stats { gap:9px; }
+      .stat { padding:14px; }
+      .stat-number { font-size:25px; }
+      .form-grid { grid-template-columns:1fr; }
+      .field.full { grid-column:auto; }
+      .panel { padding:15px; }
+      .toolbar input,.toolbar select { max-width:100%; }
+      .top-actions { width:100%; }
+      .top-actions button { flex:1; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="logo">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M12 46L50 14L88 46" stroke="#164b38" stroke-width="9"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22 43V86H78V43" stroke="#164b38" stroke-width="9"/>
+        <path d="M42 86V60H58V86" stroke="#e99551" stroke-width="8"/>
+      </svg>
+    </div>
+    <div class="brand-name">Facility<span>Core</span></div>
+  </div>
+  <div class="header-right">
+    <small>Owner Administration Panel</small>
+  </div>
+</header>
+
+<main>
+  <div class="top">
+    <div>
+      <h1>Owner Dashboard</h1>
+      <div class="sub">Manage society enquiries and customer details.</div>
+    </div>
+    <div class="top-actions">
+      <button class="orange" id="refreshBtn" onclick="loadRecords()">↻ Refresh Data</button>
+      <button class="primary" onclick="showAddForm()">+ Add Enquiry</button>
+    </div>
+  </div>
+
+  <section class="stats">
+    <div class="stat"><div class="stat-label">Total Enquiries</div>
+      <div class="stat-number" id="total">0</div></div>
+    <div class="stat"><div class="stat-label">New Enquiries</div>
+      <div class="stat-number" id="newCount">0</div></div>
+    <div class="stat"><div class="stat-label">Contacted</div>
+      <div class="stat-number" id="contacted">0</div></div>
+    <div class="stat"><div class="stat-label">Converted</div>
+      <div class="stat-number" id="converted">0</div></div>
+  </section>
+
+  <section class="panel" id="formPanel">
+    <div class="panel-heading"><h2 id="formTitle">＋ Add New Enquiry</h2></div>
+    <form id="recordForm">
+      <input type="hidden" id="recordId">
+      <div class="form-grid">
+        <div class="field">
+          <label for="society">Society Name *</label>
+          <input id="society" required placeholder="Enter society name">
+        </div>
+        <div class="field">
+          <label for="contact">Contact Person *</label>
+          <input id="contact" required placeholder="Full name">
+        </div>
+        <div class="field">
+          <label for="mobile">Mobile Number *</label>
+          <input id="mobile" type="tel" required placeholder="Mobile number">
+        </div>
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" type="email" placeholder="name@example.com">
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <input id="city" placeholder="City">
+        </div>
+        <div class="field">
+          <label for="status">Enquiry Status</label>
+          <select id="status">
+            <option>New</option>
+            <option>Contacted</option>
+            <option>Converted</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="requirements">Requirements / Notes</label>
+          <textarea id="requirements"
+            placeholder="Enter society requirements or notes..."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="primary" type="submit" id="saveButton">+ Save Enquiry</button>
+        <button class="secondary" type="button" onclick="resetForm()">Clear Form</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel-heading"><h2>Enquiry Records</h2></div>
+    <div class="toolbar">
+      <input id="search" placeholder="Search society, contact, mobile..."
+        oninput="renderTable()">
+      <select id="filter" onchange="renderTable()">
+        <option value="">All Statuses</option>
+        <option>New</option>
+        <option>Contacted</option>
+        <option>Converted</option>
+        <option>Rejected</option>
+      </select>
+      <button class="secondary" onclick="exportCSV()">↓ Export CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th><th>Society Name</th><th>Contact Person</th>
+            <th>Mobile</th><th>Email</th><th>City</th>
+            <th>Requirements</th><th>Status</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="9" class="loading">Loading records...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<div id="message" role="status" aria-live="polite"></div>
+
+<script>
+  // Must be the same key the demo form (demo.html) uses
+  const RECORDS_KEY = "FC_RECORDS";
+  let memoryRecords = []; // fallback if the browser blocks storage
+
+  let records = [];
+  let messageTimer;
+
+  // ---------- storage helpers (safe) ----------
+  function readAll() {
+    try {
+      const raw = localStorage.getItem(RECORDS_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return memoryRecords; }
+  }
+  function writeAll(list) {
+    memoryRecords = list;
+    try { localStorage.setItem(RECORDS_KEY, JSON.stringify(list)); }
+    catch (e) {}
+  }
+
+  // ---------- UI helpers ----------
+  function notify(text, isError = false) {
+    const box = document.getElementById("message");
+    box.textContent = text;
+    box.className = isError ? "error" : "";
+    box.style.display = "block";
+    clearTimeout(messageTimer);
+    messageTimer = setTimeout(() => box.style.display = "none", 3500);
+  }
+
+  function safe(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[char]);
+  }
+
+  function formatDate(ts) {
+    return new Date(Number(ts)).toLocaleString("en-IN", {
+      day:"2-digit", month:"short", year:"numeric",
+      hour:"2-digit", minute:"2-digit", hour12:true
+    });
+  }
+
+  function newId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+  }
+
+  // ---------- LOAD ----------
+  function loadRecords() {
+    records = readAll().sort((a, b) => Number(b.submittedAt) - Number(a.submittedAt));
+    updateStats();
+    renderTable();
+  }
+
+  function updateStats() {
+    document.getElementById("total").textContent = records.length;
+    document.getElementById("newCount").textContent =
+      records.filter(r => r.status === "New").length;
+    document.getElementById("contacted").textContent =
+      records.filter(r => r.status === "Contacted").length;
+    document.getElementById("converted").textContent =
+      records.filter(r => r.status === "Converted").length;
+  }
+
+  // ---------- TABLE + SEARCH + FILTER ----------
+  function renderTable() {
+    const query = document.getElementById("search").value.toLowerCase().trim();
+    const filter = document.getElementById("filter").value;
+
+    const filtered = records.filter(r => {
+      const values = [r.society,r.contact,r.mobile,r.email,r.city,r.requirements];
+      return values.join(" ").toLowerCase().includes(query) &&
+        (!filter || r.status === filter);
+    });
+
+    const body = document.getElementById("tableBody");
+    if (!filtered.length) {
+      body.innerHTML =
+        '<tr><td colspan="9" class="empty">No enquiries found.</td></tr>';
+      return;
+    }
+
+    body.innerHTML = filtered.map(r => `
+      <tr>
+        <td>${safe(formatDate(r.submittedAt))}</td>
+        <td><strong>${safe(r.society)}</strong></td>
+        <td>${safe(r.contact)}</td>
+        <td>${safe(r.mobile)}</td>
+        <td>${safe(r.email)}</td>
+        <td>${safe(r.city)}</td>
+        <td>${safe(r.requirements)}</td>
+        <td><span class="status ${safe(r.status)}">${safe(r.status)}</span></td>
+        <td><div class="actions">
+          <button class="secondary" onclick="editRecord('${safe(r.id)}')">Edit</button>
+          <button class="danger" onclick="removeRecord('${safe(r.id)}')">Delete</button>
+        </div></td>
+      </tr>
+    `).join("");
+  }
+
+  // ---------- ADD FORM ----------
+  function showAddForm() {
+    resetForm();
+    document.getElementById("formPanel").scrollIntoView({
+      behavior:"smooth",block:"start"
+    });
+    document.getElementById("society").focus();
+  }
+
+  function resetForm() {
+    document.getElementById("recordForm").reset();
+    document.getElementById("recordId").value = "";
+    document.getElementById("formTitle").textContent = "＋ Add New Enquiry";
+    document.getElementById("saveButton").textContent = "+ Save Enquiry";
+  }
+
+  // ---------- VALIDATION ----------
+  function validate(data) {
+    if (!data.society || !data.contact || !data.mobile) {
+      return "Society name, contact person and mobile are required.";
+    }
+    if (!/^[0-9+()\-\s]{7,20}$/.test(data.mobile)) {
+      return "Enter a valid mobile number.";
+    }
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      return "Enter a valid email address.";
+    }
+    return "";
+  }
+
+  // ---------- SAVE / UPDATE ----------
+  document.getElementById("recordForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const id = document.getElementById("recordId").value;
+    const data = {
+      society:document.getElementById("society").value.trim(),
+      contact:document.getElementById("contact").value.trim(),
+      mobile:document.getElementById("mobile").value.trim(),
+      email:document.getElementById("email").value.trim(),
+      city:document.getElementById("city").value.trim(),
+      requirements:document.getElementById("requirements").value.trim(),
+      status:document.getElementById("status").value || "New"
+    };
+
+    const error = validate(data);
+    if (error) { notify(error, true); return; }
+
+    const list = readAll();
+
+    if (id) {
+      const index = list.findIndex(item => item.id === id);
+      if (index === -1) { notify("Enquiry not found.", true); return; }
+      list[index] = { ...list[index], ...data };
+      writeAll(list);
+      notify("Enquiry updated successfully.");
+    } else {
+      list.push({ id:newId(), submittedAt:Date.now(), ...data });
+      writeAll(list);
+      notify("Enquiry added successfully.");
+    }
+
+    resetForm();
+    loadRecords();
+  });
+
+  // ---------- EDIT ----------
+  function editRecord(id) {
+    const r = records.find(item => item.id === id);
+    if (!r) return;
+
+    document.getElementById("recordId").value = r.id;
+    document.getElementById("society").value = r.society;
+    document.getElementById("contact").value = r.contact;
+    document.getElementById("mobile").value = r.mobile;
+    document.getElementById("email").value = r.email;
+    document.getElementById("city").value = r.city;
+    document.getElementById("requirements").value = r.requirements;
+    document.getElementById("status").value = r.status;
+    document.getElementById("formTitle").textContent = "✎ Edit Enquiry";
+    document.getElementById("saveButton").textContent = "Update Enquiry";
+
+    document.getElementById("formPanel").scrollIntoView({
+      behavior:"smooth",block:"start"
+    });
+  }
+
+  // ---------- DELETE ----------
+  function removeRecord(id) {
+    const r = records.find(item => item.id === id);
+    if (!r) return;
+
+    if (!confirm("Delete the enquiry for " + r.society + "?\nThis cannot be undone.")) {
+      return;
+    }
+
+    writeAll(readAll().filter(item => item.id !== id));
+    notify("Enquiry deleted successfully.");
+    loadRecords();
+  }
+
+  // ---------- CSV EXPORT ----------
+  function exportCSV() {
+    if (!records.length) {
+      notify("There are no records to export.", true);
+      return;
+    }
+
+    const columns = [
+      ["Date","submittedAt"],["Society Name","society"],
+      ["Contact Person","contact"],["Mobile","mobile"],
+      ["Email","email"],["City","city"],
+      ["Requirements","requirements"],["Status","status"]
+    ];
+
+    const quote = value => '"' + String(value ?? "").replace(/"/g,'""') + '"';
+    const rows = [
+      columns.map(c => quote(c[0])).join(","),
+      ...records.map(r => columns.map(c =>
+        quote(c[1] === "submittedAt" ? formatDate(r.submittedAt) : r[c[1]])
+      ).join(","))
+    ];
+
+    const blob = new Blob(["\uFEFF" + rows.join("\r\n")],
+      {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "FacilityCore-Enquiries.csv";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    notify("CSV downloaded.");
+  }
+
+  // ---------- AUTO-UPDATE when the demo form saves a new request ----------
+  window.addEventListener("storage", function(e) {
+    if (e.key === RECORDS_KEY) {
+      loadRecords();
+      notify("New enquiry received!");
+    }
+  });
+
+  // Also refresh when you come back to this tab
+  document.addEventListener("visibilitychange", function() {
+    if (!document.hidden) loadRecords();
+  });
+
+  // ---------- START ----------
+  loadRecords();
+</script>
+</body>
+</html>
