@@ -46,16 +46,21 @@
       letter-spacing: -1px;
     }
 
-    .logo {
-      display: grid;
-      place-items: center;
-      width: 48px;
-      height: 46px;
-      border-radius: 12px;
-      background: var(--orange);
-      color: var(--ink);
-      font-size: 28px;
-    }
+  .logo {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: var(--orange);
+  color: var(--ink);
+}
+
+.logo svg {
+  width: 34px;
+  height: 34px;
+}
 
     .eyebrow {
       color: var(--orange);
@@ -245,9 +250,19 @@
   <main class="page">
 
     <header class="brand">
-      <div class="logo" aria-hidden="true">⌂</div>
-      <div>FacilityCore</div>
-    </header>
+  <div class="logo" aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none"
+         stroke="currentColor"
+         stroke-width="3"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+      <path d="M4 14 16 5l12 9"/>
+      <path d="M7 12v15h18V12"/>
+      <path d="M13 27v-9h6v9"/>
+    </svg>
+  </div>
+  <div>FacilityCore</div>
+</header>
 
     <p class="eyebrow">LET'S MAKE COMMUNITY LIVING SIMPLER</p>
 
